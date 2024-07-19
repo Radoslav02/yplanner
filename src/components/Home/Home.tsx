@@ -2,20 +2,21 @@ import { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Home.scss";
 import AppointmentCard from "../AppointmentCard/AppointmentCard";
+import { truncateDateString } from "../../helpers/truncateDateString";
+import { addOneWeek } from "../../helpers/addOneWeek";
+import { subtractOneWeek } from "../../helpers/subtractOneWeek";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
+  const [relativeDay, setRelativeDay] = useState<Date>(new Date());
 
   useEffect(() => {
     setWeekDays(calcWeekDays());
-  }, []);
-
-  useEffect(() => {
-    if (weekDays.length) console.table(weekDays);
-  }, [weekDays]);
+    console.log(relativeDay);
+  }, [relativeDay]);
 
   function calcWeekDays() {
-    const currentDate = new Date();
+    const currentDate = new Date(relativeDay);
     const dayOfWeek = currentDate.getDay();
     console.log(currentDate.getDay());
 
@@ -27,18 +28,31 @@ export default function Home() {
     for (let i = 0; i < 7; i++) {
       const date = new Date(monday);
       date.setDate(monday.getDate() + i);
-      week.push(date.toString());
+      week.push(truncateDateString(date));
     }
     return week;
   }
 
   return (
     <div className="home-container">
-      {weekDays?.length && weekDays.map((day: string) => (
-        <div key={day}>
-          <AppointmentCard day={day} />
-        </div>
-      ))}
+      <div
+        className="left-swipe"
+        onTouchEnd={() =>
+          setRelativeDay((oldDate: Date) => subtractOneWeek(oldDate))
+        }
+      ></div>
+      <div className="appointments-wrapper">
+        {weekDays?.length &&
+          weekDays.map((day: string) => (
+            <div key={day}>
+              <AppointmentCard day={day} />
+            </div>
+          ))}
+      </div>
+      <div
+        className="right-swipe"
+        onTouchEnd={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}
+      ></div>
       <NavBar />
     </div>
   );
