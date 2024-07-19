@@ -10,8 +10,8 @@ import Materials from "./components/Materials/Materials";
 
 function App() {
   return (
-    <div className="app-container">
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="app-container">
         <ToastContainer
           position="top-center"
           autoClose={3000}
@@ -20,13 +20,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/statistics" element = {<Statistics />} />
-          <Route path="/finished" element = {<Finished />} />
-          <Route path="/customers" element = {<Customers />} />
-          <Route path="/materials" element = {<Materials />} />
+          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/finished" element={<Finished />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/materials" element={<Materials />} />
         </Routes>
-      </BrowserRouter>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
