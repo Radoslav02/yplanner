@@ -99,7 +99,7 @@ export default function Login() {
           </div>
 
           <button onClick={handleLogin} id="button">
-            login
+            prijavi se
           </button>
         </div>
       </div>

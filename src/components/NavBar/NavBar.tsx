@@ -5,8 +5,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import ColorLensOutlinedIcon from '@mui/icons-material/ColorLensOutlined';
-
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
@@ -14,29 +12,29 @@ export default function NavBar() {
   const navigate = useNavigate();
 
   return (
-    <div  className="navBar-container">
+    <div className="navBar-container">
       <div onClick={() => navigate("/statistics")} className="statisticsIcon-container">
-        <TrendingUpIcon sx={{fontSize: 40}} />
+        <TrendingUpIcon sx={{ fontSize: 40 }} />
       </div>
 
       <div className="checkboxIcon-container">
-        <CheckBoxIcon sx={{fontSize: 40}} />
+        <CheckBoxIcon sx={{ fontSize: 40 }} />
       </div>
 
       <div className="calendarIcon-container">
-        <CalendarMonthIcon sx={{fontSize: 40}} />
+        <CalendarMonthIcon sx={{ fontSize: 40 }} />
       </div>
 
       <div onClick={() => navigate("/home")} className="homeIcon-container">
-        <HomeOutlinedIcon sx={{fontSize: 40}} />
+        <HomeOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
 
       <div className="clientsIcon-container">
-        <GroupsOutlinedIcon sx={{fontSize: 40}} />
+        <GroupsOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
 
       <div className="materials-container">
-        <ColorLensOutlinedIcon sx={{fontSize: 40}} />
+        <ColorLensOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
     </div>
   );

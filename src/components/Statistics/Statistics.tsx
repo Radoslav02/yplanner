@@ -1,4 +1,3 @@
-import React from 'react'
 import "./Statistics.scss"
 import NavBar from '../NavBar/NavBar'
 
