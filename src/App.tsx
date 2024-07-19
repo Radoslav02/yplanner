@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import Materials from "./components/Materials/Materials";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app-container">
         <ToastContainer
           position="top-center"
@@ -26,7 +26,7 @@ function App() {
           <Route path="/materials" element={<Materials />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
