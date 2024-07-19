@@ -17,7 +17,7 @@ export default function NavBar() {
         <TrendingUpIcon sx={{ fontSize: 40 }} />
       </div>
 
-      <div className="checkboxIcon-container">
+      <div onClick={() => navigate("/finished")} className="checkboxIcon-container">
         <CheckBoxIcon sx={{ fontSize: 40 }} />
       </div>
 
@@ -29,11 +29,11 @@ export default function NavBar() {
         <HomeOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
 
-      <div className="clientsIcon-container">
+      <div onClick={() => navigate("/customers")} className="clientsIcon-container">
         <GroupsOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
 
-      <div className="materials-container">
+      <div onClick={() => navigate("/materials")} className="materials-container">
         <ColorLensOutlinedIcon sx={{ fontSize: 40 }} />
       </div>
     </div>
