@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { parseMessage } from "../../services/firestoreMessage";
+import logo from '../../assets/JPlanner.png'
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -66,7 +67,7 @@ export default function Login() {
         <div className="image-container">
           <img
             className="logo"
-            src="src\assets\JPlanner.png"
+            src={logo}
             alt="JPlanner logo"
           ></img>
         </div>
