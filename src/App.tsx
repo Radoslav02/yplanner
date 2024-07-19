@@ -4,6 +4,9 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home/Home";
 import Statistics from "./components/Statistics/Statistics";
+import Finished from "./components/Finished/Finished";
+import Customers from "./components/Customers/Customers";
+import Materials from "./components/Materials/Materials";
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/statistics" element = {<Statistics />} />
+          <Route path="/finished" element = {<Finished />} />
+          <Route path="/customers" element = {<Customers />} />
+          <Route path="/materials" element = {<Materials />} />
         </Routes>
       </BrowserRouter>
     </div>
