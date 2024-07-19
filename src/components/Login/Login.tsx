@@ -62,48 +62,46 @@ export default function Login() {
   }
 
   return (
-    <>
-      <div className="main-container">
-        <div className="image-container">
-          <img
-            className="logo"
-            src={logo}
-            alt="JPlanner logo"
-          ></img>
-        </div>
-
-        <div className="input-container">
-          <div className="email-container">
-            <div className="user-icon-container">
-              <EmailOutlinedIcon />
-            </div>
-            <input
-              value={email}
-              onChange={(e) => handleEmailChange(e)}
-              type="text"
-              className="email"
-              id={emailError ? "error" : ""}
-            ></input>
-          </div>
-
-          <div className="email-container">
-            <div className="user-icon-container">
-              <KeyOutlinedIcon />
-            </div>
-            <input
-              value={password}
-              onChange={(e) => handlePasswordChange(e)}
-              type="password"
-              className="password"
-              id={passwordError ? "error" : ""}
-            ></input>
-          </div>
-
-          <button onClick={handleLogin} id="button">
-            prijavi se
-          </button>
-        </div>
+    <div className="login-container">
+      <div className="image-container">
+        <img
+          className="logo"
+          src={logo}
+          alt="JPlanner logo"
+        ></img>
       </div>
-    </>
+
+      <div className="input-container">
+        <div className="email-container">
+          <div className="user-icon-container">
+            <EmailOutlinedIcon />
+          </div>
+          <input
+            value={email}
+            onChange={(e) => handleEmailChange(e)}
+            type="text"
+            className="email"
+            id={emailError ? "error" : ""}
+          ></input>
+        </div>
+
+        <div className="email-container">
+          <div className="user-icon-container">
+            <KeyOutlinedIcon />
+          </div>
+          <input
+            value={password}
+            onChange={(e) => handlePasswordChange(e)}
+            type="password"
+            className="password"
+            id={passwordError ? "error" : ""}
+          ></input>
+        </div>
+
+        <button onClick={handleLogin} id="button">
+          prijavi se
+        </button>
+      </div>
+    </div>
   );
 }
