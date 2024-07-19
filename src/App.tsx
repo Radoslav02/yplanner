@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home/Home";
+import Statistics from "./components/Statistics/Statistics";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}  />
           <Route path="/home" element={<Home />} />
+          <Route path="/statistics" element = {<Statistics />} />
         </Routes>
       </BrowserRouter>
     </div>

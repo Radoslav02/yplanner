@@ -3,8 +3,7 @@ import "./Login.scss";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { toast } from "react-toastify";
-import { Password } from "@mui/icons-material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
