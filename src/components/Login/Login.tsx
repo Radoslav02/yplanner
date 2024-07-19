@@ -3,14 +3,18 @@ import "./Login.scss";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { toast } from "react-toastify";
-import { Password } from "@mui/icons-material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { parseMessage } from "../../services/firestoreMessage";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
+  const { login } = useAuth();
+
   const navigate = useNavigate();
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,20 +31,32 @@ export default function Login() {
     setPassword(event.target.value);
   }
 
-  function handleLogin() {
+  async function handleLogin() {
+    if (!email) {
+      toast.error("Unesi email");
+      setEmailError(true);
+    }
+
+    if (!password) {
+      toast.error("Unesi password");
+      setPasswordError(true);
+    }
+
     if (email && password) {
-      console.log(email, password);
-      navigate("/home");
-    } else if (!email && password) {
-      toast.error("E-mail nije dobar");
-      setEmailError(true);
-    } else if (!password && email) {
-      toast.error("Password nije dobar");
-      setPasswordError(true);
-    } else {
-      toast.error("E-mail i password nisu dobri");
-      setEmailError(true);
-      setPasswordError(true);
+
+      try {
+        const response = await login(email, password);
+        if (response) {
+          toast.success("Dobrodošli");
+          navigate("/home");
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        console.log(error.message);
+        toast.error(parseMessage(error.message))
+        setPassword('')
+        setEmail('')
+      }
     }
   }
 
@@ -66,7 +82,6 @@ export default function Login() {
               type="text"
               className="email"
               id={emailError ? "error" : ""}
-              placeholder="email"
             ></input>
           </div>
 
@@ -80,7 +95,6 @@ export default function Login() {
               type="password"
               className="password"
               id={passwordError ? "error" : ""}
-              placeholder="password"
             ></input>
           </div>
 

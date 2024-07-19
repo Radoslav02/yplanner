@@ -1,11 +1,4 @@
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  Router,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,13 +8,13 @@ function App() {
   return (
     <div className="app-container">
       <BrowserRouter>
-      <ToastContainer
-      position="top-center"
-      autoClose={3000}
-      transition={Zoom}
-    />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          transition={Zoom}
+        />
         <Routes>
-          <Route path="/" element={<Login />}  />
+          <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
