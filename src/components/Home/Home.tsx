@@ -10,11 +10,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
+import { Appointment } from "../../models/appointment";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
   const [relativeDay, setRelativeDay] = useState<Date>(new Date());
-  const [appointmentsData, setAppointmentsData] = useState<any>(null);
+  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>([] as Appointment[]);
 
   const { user } = useAuth();
 
@@ -28,16 +29,13 @@ export default function Home() {
     setWeekDays(calcWeekDays());
   }, [relativeDay]);
 
-  useEffect(() => {
-    console.log(appointmentsData);
-  }, [appointmentsData]);
-
   async function fetchAppointments() {
     try {
       const appointmentsCollectionRef = collection(db, `users/${user!.uid}/appointments`);
       const appointmentDocs = await getDocs(appointmentsCollectionRef);
       const appointmentsData = appointmentDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAppointmentsData(appointmentsData);
+      console.log(appointmentsData);
+      setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
       console.error("Error fetching appointments:", error);
       toast.error("Error fetching appointments");
@@ -61,6 +59,19 @@ export default function Home() {
     return week;
   }
 
+  function filterAppointmentsByDate(weekDate: string) {
+
+    const day = weekDate.slice(weekDate.indexOf('-') + 2)
+    if (!appointmentsData) return []
+    const data = appointmentsData
+    const matched = [] as Appointment[]
+    data.forEach((appointment: Appointment) => {
+      console.log(day, appointment.date);
+      if (day === appointment.date) matched.push(appointment)
+    })
+    return matched
+  }
+
   return (
     <div className="home-container">
       <div
@@ -73,7 +84,7 @@ export default function Home() {
         {weekDays?.length &&
           weekDays.map((day: string) => (
             <div key={day}>
-              <AppointmentCard day={day} />
+              <AppointmentCard day={day} data={filterAppointmentsByDate(day)} />
             </div>
           ))}
       </div>
