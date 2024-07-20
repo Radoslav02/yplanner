@@ -76,7 +76,7 @@ export default function Home() {
     <div className="home-container">
       <div
         className="left-swipe"
-        onTouchEnd={() =>
+        onClick={() =>
           setRelativeDay((oldDate: Date) => subtractOneWeek(oldDate))
         }
       ></div>
@@ -90,7 +90,7 @@ export default function Home() {
       </div>
       <div
         className="right-swipe"
-        onTouchEnd={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}
+        onClick={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}
       ></div>
       <NavBar />
     </div>
