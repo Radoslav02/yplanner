@@ -41,7 +41,9 @@ export default function Customers() {
   return (
     <div className="customers-container">
 
-      
+      <div className="customers-title-container">
+        <h1>Mušterije</h1>
+      </div>
 
 
       {clientsData?.length &&
