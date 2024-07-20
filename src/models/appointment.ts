@@ -1,5 +1,5 @@
 export interface Appointment {
-    id: string,
+    id?: string,
     date: string,
     done: boolean,
     name: string,

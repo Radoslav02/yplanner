@@ -6,22 +6,31 @@ import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import { truncateDateString } from "../../helpers/truncateDateString";
 import { addOneWeek } from "../../helpers/addOneWeek";
 import { subtractOneWeek } from "../../helpers/subtractOneWeek";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { Appointment } from "../../models/appointment";
+import DeleteModal from "../modals/DeleteModal";
+import NewAppointmentModal from "../modals/NewAppointmentModal";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
   const [relativeDay, setRelativeDay] = useState<Date>(new Date());
-  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>([] as Appointment[]);
+  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
+    [] as Appointment[]
+  );
+  const [defaultDate, setDefaultDate] = useState<string>("");
+  const [deleteClicked, setDeleteClicked] = useState<boolean>(false);
+  const [selectedAppointment, setSelectedAppointment] = useState<string>("");
+  const [addAppointmentClicked, setAddAppointmentClick] =
+    useState<boolean>(false);
 
   const { user } = useAuth();
 
   useEffect(() => {
     if (user && user.uid) {
-      fetchAppointments()
+      fetchAppointments();
     }
   }, [user]);
 
@@ -31,9 +40,15 @@ export default function Home() {
 
   async function fetchAppointments() {
     try {
-      const appointmentsCollectionRef = collection(db, `users/${user!.uid}/appointments`);
+      const appointmentsCollectionRef = collection(
+        db,
+        `users/${user!.uid}/appointments`
+      );
       const appointmentDocs = await getDocs(appointmentsCollectionRef);
-      const appointmentsData = appointmentDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const appointmentsData = appointmentDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       console.log(appointmentsData);
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
@@ -42,6 +57,25 @@ export default function Home() {
     }
   }
 
+  async function deleteAppointment(appointmentId: string) {
+    try {
+      const appointmentDocRef = doc(
+        db,
+        `users/${user!.uid}/appointments/${appointmentId}`
+      );
+      await deleteDoc(appointmentDocRef);
+      setAppointmentsData(
+        appointmentsData.filter(
+          (appointment: Appointment) => appointment.id !== appointmentId
+        )
+      );
+      toast.success("Termin usešno obrisan");
+      closeDeleteModal();
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+      toast.error("Error deleting appointment");
+    }
+  }
 
   function calcWeekDays() {
     const currentDate = new Date(relativeDay);
@@ -60,20 +94,48 @@ export default function Home() {
   }
 
   function filterAppointmentsByDate(weekDate: string) {
-
-    const day = weekDate.slice(weekDate.indexOf('-') + 2)
-    if (!appointmentsData) return []
-    const data = appointmentsData
-    const matched = [] as Appointment[]
+    const day = weekDate.slice(weekDate.indexOf("-") + 2);
+    if (!appointmentsData) return [];
+    const data = appointmentsData;
+    const matched = [] as Appointment[];
     data.forEach((appointment: Appointment) => {
-      console.log(day, appointment.date);
-      if (day === appointment.date) matched.push(appointment)
-    })
-    return matched
+      if (day === appointment.date) matched.push(appointment);
+    });
+    return matched;
+  }
+
+  function closeDeleteModal() {
+    setDeleteClicked(false);
+  }
+
+  function confirmDelete() {
+    deleteAppointment(selectedAppointment);
+  }
+
+  function closeNewAppointment() {
+    setAddAppointmentClick(false);
+  }
+
+  function saveAppointment(appointment: Appointment) {
+    console.log(appointment);
   }
 
   return (
     <div className="home-container">
+      {deleteClicked && (
+        <DeleteModal
+          heading={"termin"}
+          close={closeDeleteModal}
+          confirm={confirmDelete}
+        />
+      )}
+      {addAppointmentClicked && (
+        <NewAppointmentModal
+          close={closeNewAppointment}
+          confirm={saveAppointment}
+          defaultDate={defaultDate}
+        />
+      )}
       <div
         className="left-swipe"
         onClick={() =>
@@ -84,7 +146,14 @@ export default function Home() {
         {weekDays?.length &&
           weekDays.map((day: string) => (
             <div key={day}>
-              <AppointmentCard day={day} data={filterAppointmentsByDate(day)} />
+              <AppointmentCard
+                day={day}
+                data={filterAppointmentsByDate(day)}
+                setDeleteClicked={setDeleteClicked}
+                setSelectedAppointment={setSelectedAppointment}
+                setAppointmentClicked={setAddAppointmentClick}
+                setDefaultDate={setDefaultDate}
+              />
             </div>
           ))}
       </div>

@@ -1,0 +1,102 @@
+.modal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow-y: scroll;
+  inset: 0;
+  top: 0;
+  background-color: rgba(128, 128, 128, 0.5);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+
+  .modal-content {
+    min-height: 25vh;
+    min-width: 80vw;
+    background-color: #be917e;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 2px solid #8e604a;
+
+    .modal-form {
+      width: 100%;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      .form-group {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: #d9d9d9;
+        input,select,option{
+          height: 30px !important;  
+          width: 200px !important;
+          border-radius: 5px !important;
+          border: 2px solid #d9d9d9 !important;
+          padding: 0;
+          background-color: white;
+        }
+
+        select,option {
+          width: 204px !important;
+          height: 34px !important;
+        }
+      }
+
+    }
+
+    .modal-heading {
+      height: 30px;
+      background-color: #d9d9d9;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #8e604a;
+    }
+
+    p {
+      width: 70%;
+      text-align: center;
+      color: #d9d9d9;
+    }
+
+    .modal-buttons-wrapper {
+      display: flex;
+      gap: 10px;
+      width: 70%;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        background-color: #d9d9d9;
+        color: #8e604a;
+        border-radius: 10px;
+        width: 100%;
+        height: 50px;
+        margin: 0;
+        font-size: 16px;
+        border-color: #8e604a;
+        border-width: 1px;
+        filter: drop-shadow(2px 3px 3px #000000);
+        text-align: center;
+      }
+    }
+  }
+}
