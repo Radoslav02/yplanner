@@ -1,0 +1,38 @@
+.customer-container{
+    background-color: #EDCFC0;
+    width: 300px;
+    font-size: 16px !important;
+    border-radius:  10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #8E604A;
+    filter: drop-shadow(2px 3px 3px #000000);
+    
+    .client-info-container{
+        display: flex;
+        flex: 1; 
+        align-items: center; 
+        min-width: 0; 
+        padding-left: 10px;
+    }
+   
+    .customer-icons-container{
+        display: flex;
+        padding-right: 5px;
+        gap: 5px;
+
+        .profile-icon-container{
+            color: #8E604A;
+        }
+
+        .edit-icon-container{
+            color:#8E604A;
+        }
+
+        .delete-icon-container{
+            color: #8E604A;
+        } 
+    }
+}
+
