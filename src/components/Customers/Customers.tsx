@@ -40,12 +40,7 @@ export default function Customers() {
 
   return (
     <div className="customers-container">
-
-      <div className="customers-title-container">
-        <h1>Mušterije</h1>
-      </div>
-
-
+      <div className="customers-title-container">Musterije</div>
       {clientsData?.length &&
         clientsData.map((client: any) => (
           <div key={client.id}>

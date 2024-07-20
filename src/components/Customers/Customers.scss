@@ -10,16 +10,14 @@ body{
     flex-direction: column;
     align-items: center;
     gap: 10px;
-
-}
-
-h1{
-    margin: 0;
+    padding-top: 20px;
+  
 }
 
 .customers-title-container{
-    color: #8E604A;
     font-family: "Edu AU VIC WA NT Hand", cursive;
-    padding-top: 20px;
-
+    color: #8E604A;
+    font-size: 50px;
+    font-weight: bold;
+    filter: drop-shadow(1px 1px 1px #000000);
 }
