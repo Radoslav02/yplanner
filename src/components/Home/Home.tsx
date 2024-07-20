@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Home.scss";
@@ -5,7 +6,7 @@ import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import { truncateDateString } from "../../helpers/truncateDateString";
 import { addOneWeek } from "../../helpers/addOneWeek";
 import { subtractOneWeek } from "../../helpers/subtractOneWeek";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
@@ -13,45 +14,36 @@ import { useAuth } from "../context/AuthContext";
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
   const [relativeDay, setRelativeDay] = useState<Date>(new Date());
-  const [userData, setUserData] = useState()
+  const [appointmentsData, setAppointmentsData] = useState<any>(null);
 
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      fetchUserData()
-      console.log(user);
+    if (user && user.uid) {
+      fetchAppointments()
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     setWeekDays(calcWeekDays());
   }, [relativeDay]);
 
   useEffect(() => {
-    console.log(userData);
-  }, [userData])
+    console.log(appointmentsData);
+  }, [appointmentsData]);
 
-  async function fetchUserData() {
+  async function fetchAppointments() {
     try {
-      const docSnap = await getDoc(getUserRef());
-      console.log(docSnap.data());
-
-      if (docSnap) {
-        console.log(docSnap.data());
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setUserData(docSnap.data() as any);
-      }
+      const appointmentsCollectionRef = collection(db, `users/${user!.uid}/appointments`);
+      const appointmentDocs = await getDocs(appointmentsCollectionRef);
+      const appointmentsData = appointmentDocs.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setAppointmentsData(appointmentsData);
     } catch (error) {
-      toast.error("Error occurred", { position: "top-center" });
+      console.error("Error fetching appointments:", error);
+      toast.error("Error fetching appointments");
     }
   }
 
-  function getUserRef() {
-    const userRef = doc(db, "users", user!.uid);
-    return userRef;
-  }
 
   function calcWeekDays() {
     const currentDate = new Date(relativeDay);
