@@ -24,7 +24,6 @@ export default function AppointmentCard(props: AppointmentCardProps) {
                             <p>{appointment.name}</p>
                             <p>{appointment.service}</p>
                             <div className='crud-icon-wrapper'>
-                                <EditIcon className='icon'></EditIcon>
                                 <DeleteIcon className='icon'></DeleteIcon>
                             </div>
                         </div>
