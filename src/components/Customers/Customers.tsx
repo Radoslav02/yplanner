@@ -85,7 +85,7 @@ export default function Customers() {
       <div className="customers-title-container">Musterije</div>
       {clientsData?.length &&
         clientsData.map((client: any) => (
-          <div className="client-container">
+          <div key={client.id} className="client-container">
             <div className="client-info-container">
               <span className="client-name">{client.name}</span>
               <span className="client-phone">{client.phone}</span>
@@ -98,7 +98,7 @@ export default function Customers() {
               <div className="edit-icon-container">
                 <CreateIcon sx={{ fontSize: 30 }} />
               </div>
-              <div className="delete-icon-container" onClick={() => {
+              <div className="delete-icon-container"  onClick={() => {
                   setDeleteClicked(true);
                   setSelectedClient(client.id);
               }}>
