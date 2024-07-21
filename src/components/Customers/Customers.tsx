@@ -77,7 +77,7 @@ export default function Customers() {
     <div className="customers-container">
        {deleteClicked && (
         <DeleteModal
-          heading={"termin"}
+          heading={"klijenta"}
           close={closeDeleteModal}
           confirm={confirmDelete}
         />

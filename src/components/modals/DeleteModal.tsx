@@ -13,7 +13,7 @@ export default function DeleteModal(props: DeleteModalProps) {
         <div className="modal-container">
             <div className="modal-content">
                 <div className="modal-heading">Obriši</div>
-                <p>{`Da li ste sigurni da želite da obrišete ovaj ${heading}`}</p>
+                <p>{`Da li ste sigurni da želite da obrišete ${heading} ?`} </p>
                 <div className="modal-buttons-wrapper">
                     <button onClick={confirm}>da</button>
                     <button onClick={close}>ne</button>

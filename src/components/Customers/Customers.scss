@@ -64,6 +64,16 @@ body{
           .delete-icon-container {
             color: #8e604a;
           }
+
+          .profile-icon-container:active,
+          .edit-icon-container:active,
+          .delete-icon-container:active {
+            color: #ffffff;
+          }
+        
+
+          
+         
         }
       }
   
