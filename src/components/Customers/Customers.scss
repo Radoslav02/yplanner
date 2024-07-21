@@ -1,81 +1,77 @@
-body{
-    background-color: #E8E8E8;
-    margin: 0;
-    padding: 0;
+body {
+  background-color: #E8E8E8;
+  margin: 0;
+  padding: 0;
 }
 
-.customers-container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding-top: 20px;
+.client-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 20px;
 
-    .customers-title-container{
-        font-family: "Edu AU VIC WA NT Hand", cursive;
-        color: #8E604A;
-        font-size: 50px;
-        font-weight: bold;
-        filter: drop-shadow(1px 1px 1px #000000);
-    }
+  .client-title-container {
+      font-family: "Edu AU VIC WA NT Hand", cursive;
+      color: #8E604A;
+      font-size: 50px;
+      font-weight: bold;
+      filter: drop-shadow(1px 1px 1px #000000);
+  }
 
-    .client-container {
-        background-color: #edcfc0;
-        width: 300px;
-        font-size: 16px !important;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid #8e604a;
-        filter: drop-shadow(2px 3px 3px #000000);
-        padding: 10px;
-      
-        .client-info-container {
+  .client-container {
+      background-color: #edcfc0;
+      width: 300px;
+      font-size: 16px !important;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #8e604a;
+      filter: drop-shadow(2px 3px 3px #000000);
+      padding: 10px;
+      flex-direction: row; // Ensures horizontal alignment
+
+      .client-info-container {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          flex-direction: row; // Ensure this is set to row for horizontal alignment
+          align-items: center;
           flex: 1;
           padding-left: 10px;
           color: #8e604a !important;
           font-weight: bold;
-      
+          gap: 10px; // Add a gap between client name and phone
+
           .client-name,
           .client-phone {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: auto; // Adjust width to auto for horizontal layout
           }
-      
+
           .client-phone {
-            margin-top: 5px;
+              margin-top: 0; // Remove margin for horizontal alignment
           }
-        }
-      
-        .client-icons-container {
+      }
+
+      .client-icons-container {
           display: flex;
           padding-right: 5px;
           gap: 10px;
-      
+
           .profile-icon-container,
           .edit-icon-container,
           .delete-icon-container {
-            color: #8e604a;
+              color: #8e604a;
           }
 
           .profile-icon-container:active,
           .edit-icon-container:active,
           .delete-icon-container:active {
-            color: #ffffff;
+              color: #ffffff;
           }
-        
-
-          
-         
-        }
       }
-  
+  }
 }
-

@@ -77,7 +77,7 @@ export default function Customers() {
   }
 
   return (
-    <div className="customers-container">
+    <div className="client-container">
       {deleteClicked && (
         <DeleteModal
           heading={"klijenta"}
@@ -96,7 +96,10 @@ export default function Customers() {
           close={closeProfileModal}
         />
       )}
-      <div className="customers-title-container">Klijenti</div>
+      <div className="client-title-container">Klijenti</div>
+      <div className="new-client-container">
+
+      </div>
       {clientsData?.length &&
         clientsData.map((client: any) => (
           <div key={client.id} className="client-container">
