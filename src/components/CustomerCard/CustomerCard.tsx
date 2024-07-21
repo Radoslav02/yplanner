@@ -2,6 +2,7 @@ import "./CustomerCard.scss";
 import CreateIcon from "@mui/icons-material/Create";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Client } from "../../models/client";
 
 interface CustomerCardProps {
   name: string;

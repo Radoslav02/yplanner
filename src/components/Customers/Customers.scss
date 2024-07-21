@@ -11,13 +11,61 @@ body{
     align-items: center;
     gap: 10px;
     padding-top: 20px;
+
+    .customers-title-container{
+        font-family: "Edu AU VIC WA NT Hand", cursive;
+        color: #8E604A;
+        font-size: 50px;
+        font-weight: bold;
+        filter: drop-shadow(1px 1px 1px #000000);
+    }
+
+    .client-container {
+        background-color: #edcfc0;
+        width: 300px;
+        font-size: 16px !important;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #8e604a;
+        filter: drop-shadow(2px 3px 3px #000000);
+        padding: 10px;
+      
+        .client-info-container {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          flex: 1;
+          padding-left: 10px;
+          color: #8e604a !important;
+          font-weight: bold;
+      
+          .client-name,
+          .client-phone {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+          }
+      
+          .client-phone {
+            margin-top: 5px;
+          }
+        }
+      
+        .client-icons-container {
+          display: flex;
+          padding-right: 5px;
+          gap: 10px;
+      
+          .profile-icon-container,
+          .edit-icon-container,
+          .delete-icon-container {
+            color: #8e604a;
+          }
+        }
+      }
   
 }
 
-.customers-title-container{
-    font-family: "Edu AU VIC WA NT Hand", cursive;
-    color: #8E604A;
-    font-size: 50px;
-    font-weight: bold;
-    filter: drop-shadow(1px 1px 1px #000000);
-}
