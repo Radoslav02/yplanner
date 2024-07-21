@@ -10,14 +10,18 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Client } from "../../models/client";
 import DeleteModal from "../modals/DeleteModal";
-
+import ProfileModal from "../modals/ProfileModal";
 
 export default function Customers() {
-  const [clientsData, setClientsData] = useState<Client[]>(
-    [] as Client[]
-  );
+  const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
   const [deleteClicked, setDeleteClicked] = useState<boolean>(false);
   const [selectedClient, setSelectedClient] = useState<string>("");
+  const [profileClicked, setProfileClicked] = useState<boolean>(false);
+  const [clientName, setClientName] = useState<string>("");
+  const [clientPhone, setClientPhone] = useState<number>(0);
+  const [clientInstagram, setClientInstagram] = useState<string>("");
+  const [clientMail, setClientMail] = useState<string>("");
+  const [clientNote, setClientNote] = useState<string>("");
 
   const { user } = useAuth();
 
@@ -48,15 +52,10 @@ export default function Customers() {
 
   async function deleteAppointment(clientId: string) {
     try {
-      const clientDocRef = doc(
-        db,
-        `users/${user!.uid}/clients/${clientId}`
-      );
+      const clientDocRef = doc(db, `users/${user!.uid}/clients/${clientId}`);
       await deleteDoc(clientDocRef);
       setClientsData(
-        clientsData.filter(
-          (client: Client) => client.id !== clientId
-        )
+        clientsData.filter((client: Client) => client.id !== clientId)
       );
       toast.success("Termin usešno obrisan");
       closeDeleteModal();
@@ -73,16 +72,31 @@ export default function Customers() {
     deleteAppointment(selectedClient);
   }
 
+  function closeProfileModal() {
+    setProfileClicked(false);
+  }
+
   return (
     <div className="customers-container">
-       {deleteClicked && (
+      {deleteClicked && (
         <DeleteModal
           heading={"klijenta"}
           close={closeDeleteModal}
           confirm={confirmDelete}
         />
       )}
-      <div className="customers-title-container">Musterije</div>
+      {profileClicked && (
+        <ProfileModal
+          heading={"Klijent"}
+          name = {clientName}
+          phone={clientPhone}
+          instagram={clientInstagram}
+          mail={clientMail}
+          note={clientNote}
+          close={closeProfileModal}
+        />
+      )}
+      <div className="customers-title-container">Klijenti</div>
       {clientsData?.length &&
         clientsData.map((client: any) => (
           <div key={client.id} className="client-container">
@@ -92,16 +106,29 @@ export default function Customers() {
             </div>
 
             <div className="client-icons-container">
-              <div className="profile-icon-container">
+              <div
+                className="profile-icon-container"
+                onClick={() => {
+                  setProfileClicked(true);
+                  setClientName(client.name);
+                  setClientPhone(client.phone);
+                  setClientInstagram(client.instagram);
+                  setClientMail(client.email);
+                  setClientNote(client.note);
+                }}
+              >
                 <AccountCircleIcon sx={{ fontSize: 30 }} />
               </div>
               <div className="edit-icon-container">
                 <CreateIcon sx={{ fontSize: 30 }} />
               </div>
-              <div className="delete-icon-container"  onClick={() => {
+              <div
+                className="delete-icon-container"
+                onClick={() => {
                   setDeleteClicked(true);
                   setSelectedClient(client.id);
-              }}>
+                }}
+              >
                 <DeleteIcon sx={{ fontSize: 30 }} />
               </div>
             </div>
