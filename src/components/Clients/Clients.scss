@@ -4,7 +4,7 @@ body {
   padding: 0;
 }
 
-.client-container {
+.client-container-wrapper {
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   display: flex;
   justify-content: center;
@@ -46,21 +46,23 @@ body {
     filter: drop-shadow(2px 3px 3px #000000);
     padding: 10px 20px;
     flex-direction: row;
+    gap: 15px; 
 
     .client-info-container {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column; 
+      align-items: flex-start;
       flex: 1;
       color: #8e604a !important;
       font-weight: bold;
-      gap: 10px;
+      gap: 10px; 
 
       .client-name,
       .client-phone {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      
       }
 
       .client-phone {
@@ -70,15 +72,16 @@ body {
 
     .client-icons-container {
       display: flex;
-      gap: 10px;
+      gap: 15px; 
 
       .profile-icon-container,
       .edit-icon-container,
       .delete-icon-container {
         color: #8e604a;
+        transition: color 0.3s; 
 
-        &:active {
-          color: #ffffff;
+        &:hover {
+          color: #ffffff; 
         }
       }
     }

@@ -33,35 +33,30 @@ export default function NewClientModal(props: NewClientProps) {
         <div className="modal-heading">Novi klijent</div>
         <form className="modal-form">
           <div className="form-group">
-            <label htmlFor="client">Ime</label>
+            <label>Ime</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
-
           <div className="form-group">
-            <label htmlFor="client">Telefon</label>
+            <label>Telefon</label>
             <input type="number" onChange={(e) => setPhone(parseInt(e.target.value))}
             />
           </div>
-
           <div className="form-group">
-            <label htmlFor="service">Instagram</label>
+            <label>Instagram</label>
             <input type="text" onChange={(e) => setInstagram(e.target.value)} />
           </div>
-
           <div className="form-group">
-            <label htmlFor="service">E-mail</label>
+            <label>E-mail</label>
             <input type="text" onChange={(e) => setEmail(e.target.value)} />
           </div>
-
           <div className="form-group">
             <label htmlFor="service">Note</label>
             <input type="text" onChange={(e) => setNote(e.target.value)} />
           </div>
-          
         </form>
         <div className="modal-buttons-wrapper">
           <button onClick={handleSave}>sačuvaj</button>

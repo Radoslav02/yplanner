@@ -1,6 +1,6 @@
 import "./Modals.scss";
 
-interface ProfileModalProps {
+interface ShowProfileModalProps {
   heading: string;
   name: string;
   phone: number;
@@ -10,7 +10,7 @@ interface ProfileModalProps {
   close: () => void;
 }
 
-export default function ProfileModal(props: ProfileModalProps) {
+export default function ProfileModal(props: ShowProfileModalProps) {
   const {close, name, phone, instagram, mail, note } = props;
 
   return (
