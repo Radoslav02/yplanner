@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
-import "./Customers.scss";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import "./Clients.scss";
+import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -11,12 +11,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Client } from "../../models/client";
 import DeleteModal from "../modals/DeleteModal";
 import ProfileModal from "../modals/ProfileModal";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import NewClientModal from "../modals/NewClientModal";
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
   const [deleteClicked, setDeleteClicked] = useState<boolean>(false);
   const [selectedClient, setSelectedClient] = useState<string>("");
   const [profileClicked, setProfileClicked] = useState<boolean>(false);
+  const [addClientClicked, setAddClientClicked] = useState<boolean>(false);
+
   const [clientName, setClientName] = useState<string>("");
   const [clientPhone, setClientPhone] = useState<number>(0);
   const [clientInstagram, setClientInstagram] = useState<string>("");
@@ -50,30 +54,58 @@ export default function Customers() {
     }
   }
 
-  async function deleteAppointment(clientId: string) {
+  async function addClient(newClient: Client) {
+    try {
+      const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
+      await addDoc(clientsCollectionRef, newClient);
+
+      fetchClients();
+      toast.success("Klijent uspešno dodat");
+      closeAddClientModal();
+    } catch (error) {
+      console.error("Error adding client:", error);
+      toast.error("Error adding client");
+    }
+  }
+
+  async function deleteClient(clientId: string) {
     try {
       const clientDocRef = doc(db, `users/${user!.uid}/clients/${clientId}`);
       await deleteDoc(clientDocRef);
       setClientsData(
         clientsData.filter((client: Client) => client.id !== clientId)
       );
-      toast.success("Termin usešno obrisan");
+      toast.success("Klijent uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
-      console.error("Error deleting appointment:", error);
-      toast.error("Error deleting appointment");
+      console.error("Error deleting client:", error);
+      toast.error("Error deleting client");
     }
   }
+
   function closeDeleteModal() {
     setDeleteClicked(false);
   }
 
   function confirmDelete() {
-    deleteAppointment(selectedClient);
+    deleteClient(selectedClient);
+  }
+
+  function confirmAddClient(newClient: Client) {
+    addClient(newClient);
   }
 
   function closeProfileModal() {
     setProfileClicked(false);
+  }
+
+  function closeAddClientModal() {
+    setAddClientClicked(false);
+    setClientName("");
+    setClientPhone(0);
+    setClientInstagram("");
+    setClientMail("");
+    setClientNote("");
   }
 
   return (
@@ -85,10 +117,11 @@ export default function Customers() {
           confirm={confirmDelete}
         />
       )}
+
       {profileClicked && (
         <ProfileModal
           heading={"Klijent"}
-          name = {clientName}
+          name={clientName}
           phone={clientPhone}
           instagram={clientInstagram}
           mail={clientMail}
@@ -96,10 +129,27 @@ export default function Customers() {
           close={closeProfileModal}
         />
       )}
-      <div className="client-title-container">Klijenti</div>
-      <div className="new-client-container">
 
+      {addClientClicked && (
+        <NewClientModal
+          close={closeAddClientModal}
+          confirm={confirmAddClient}
+        />
+      )}
+
+      <div className="client-title-container">Klijenti</div>
+
+      <div
+        className="new-client-container"
+        onClick={() => {
+          setAddClientClicked(true);
+        }}
+      >
+        <div className="new-clientIcon-container">
+          <AddCircleIcon sx={{ fontSize: 35 }} />
+        </div>
       </div>
+
       {clientsData?.length &&
         clientsData.map((client: any) => (
           <div key={client.id} className="client-container">
@@ -137,7 +187,6 @@ export default function Customers() {
             </div>
           </div>
         ))}
-
       <NavBar />
     </div>
   );
