@@ -7,11 +7,11 @@ body {
 .client-container-wrapper {
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   padding-top: 20px;
+  padding-bottom: 70px; // Add space for the NavBar
 
   .new-client-container {
     color: #edcfc0;
@@ -55,14 +55,15 @@ body {
       flex: 1;
       color: #8e604a !important;
       font-weight: bold;
-      gap: 10px; 
+      gap: 10px;
+      max-height: 100px;  // Adjust this as needed
+      overflow-y: auto;   // Enables vertical scrolling if content overflows
 
       .client-name,
       .client-phone {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-      
       }
 
       .client-phone {
