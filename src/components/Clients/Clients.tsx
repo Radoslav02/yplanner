@@ -20,6 +20,7 @@ import ShowProfileModal from "../modals/ShowProfileModal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NewClientModal from "../modals/NewClientModal";
 import EditClientModal from "../modals/EditClientModal";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([]);
@@ -28,6 +29,8 @@ export default function Customers() {
   const [profileClicked, setProfileClicked] = useState<boolean>(false);
   const [addClientClicked, setAddClientClicked] = useState<boolean>(false);
   const [editClientClicked, setEditClientClicked] = useState<boolean>(false);
+  const [searchedClient, setSearchedClient] = useState<string>("");
+  const [filteredClientsData, setFilteredClientsData] = useState<Client[]>([]);
 
   const [clientName, setClientName] = useState<string>("");
   const [clientPhone, setClientPhone] = useState<number>(0);
@@ -51,13 +54,22 @@ export default function Customers() {
     try {
       const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
       const clientDocs = await getDocs(clientsCollectionRef);
-      const clientsData = clientDocs.docs.map((doc) => ({
+
+      const clientsData: Client[] = clientDocs.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        ...(doc.data() as Omit<Client, "id">),
       }));
-      setClientsData(clientsData as Client[]);
+
+      const sortedClients = clientsData.sort((a, b) => {
+        const nameA = a.name;
+        const nameB = b.name;
+        return nameA.localeCompare(nameB, undefined, { sensitivity: "base" });
+      });
+
+      setClientsData(sortedClients);
+      setFilteredClientsData(sortedClients);
     } catch (error) {
-      console.error("Error fetching clients");
+      console.error("Error fetching clients", error);
       toast.error("Error fetching clients");
     }
   }
@@ -71,8 +83,8 @@ export default function Customers() {
       return;
     }
 
-    if(!newClient.name){
-      toast.error("Morate dodati ime klijentu! ")
+    if (!newClient.name) {
+      toast.error("Morate dodati ime klijentu! ");
       return;
     }
 
@@ -149,15 +161,25 @@ export default function Customers() {
 
   function closeAddClientModal() {
     setAddClientClicked(false);
-    setClientName("");
-    setClientPhone(0);
-    setClientInstagram("");
-    setClientMail("");
-    setClientNote("");
   }
 
   function closeEditClientModal() {
     setEditClientClicked(false);
+  }
+
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const searchValue = event.target.value;
+    setSearchedClient(searchValue);
+
+    if (searchValue === "") {
+      setFilteredClientsData(clientsData);
+    } else {
+      setFilteredClientsData(
+        clientsData.filter((client) =>
+          client.name.toLowerCase().startsWith(searchValue.toLowerCase())
+        )
+      );
+    }
   }
 
   return (
@@ -214,8 +236,21 @@ export default function Customers() {
         </div>
       </div>
 
-      {clientsData.length > 0 &&
-        clientsData.map((client: Client) => (
+      <div className="search-client-container">
+        <div className="search-icon-container">
+          <SearchIcon />
+        </div>
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Pretrazite pomocu imena"
+          onChange={handleSearchChange}
+          value={searchedClient}
+        />
+      </div>
+
+      {filteredClientsData.length > 0 &&
+        filteredClientsData.map((client: Client) => (
           <div key={client.id} className="client-container">
             <div
               className="client-info-container"
