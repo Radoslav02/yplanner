@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Client } from "../../models/client";
-import "./Modals.scss";
+import "./EditClientModal.scss";
 
 interface EditClientProps {
   close: () => void;
@@ -41,12 +41,12 @@ export default function EditClientModal(props: EditClientProps) {
   };
 
   return (
-    <div className="modal-container">
-      <div className="modal-content" style={{ height: "270px" }}>
-        <div className="modal-heading">Izmena klijenta</div>
-        <form className="modal-form">
-          <div className="form-group">
-            <label>Ime</label>
+    <div className="edit-modal-container">
+      <div className="edit-modal-content">
+        <div className="edit-modal-heading">Izmena klijenta</div>
+        <form className="edit-modal-form">
+          <div className="edit-form-group">
+            <label className="titles">Ime</label>
             <input
               type="text"
               value={clientName}
@@ -54,8 +54,8 @@ export default function EditClientModal(props: EditClientProps) {
               placeholder={name}
             />
           </div>
-          <div className="form-group">
-            <label>Telefon</label>
+          <div className="edit-form-group">
+            <label className="titles">Telefon</label>
             <input
               type="number"
               value={clientPhone}
@@ -63,8 +63,8 @@ export default function EditClientModal(props: EditClientProps) {
               placeholder={`${phone}`}
             />
           </div>
-          <div className="form-group">
-            <label>Instagram</label>
+          <div className="edit-form-group">
+            <label className="titles">Instagram</label>
             <input
               type="text"
               value={clientInstagram}
@@ -72,8 +72,8 @@ export default function EditClientModal(props: EditClientProps) {
               placeholder={instagram}
             />
           </div>
-          <div className="form-group">
-            <label>E-mail</label>
+          <div className="edit-form-group">
+            <label className="titles">E-mail</label>
             <input
               type="text"
               value={clientEmail}
@@ -81,17 +81,16 @@ export default function EditClientModal(props: EditClientProps) {
               placeholder={email}
             />
           </div>
-          <div className="form-group">
-            <label>Note</label>
-            <input
-              type="text"
+          <div className="edit-form-group">
+            <label className="titles">Note</label>
+            <textarea
               value={clientNote}
               onChange={(e) => setClientNote(e.target.value)}
               placeholder={note}
             />
           </div>
         </form>
-        <div className="modal-buttons-wrapper">
+        <div className="edit-modal-buttons-wrapper">
           <button onClick={handleSave}>sačuvaj</button>
           <button onClick={close}>zanemari</button>
         </div>

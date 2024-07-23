@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import "./Clients.scss";
-import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -57,12 +64,19 @@ export default function Customers() {
   }
 
   async function addClient(newClient: Client) {
-    const clientExist = clientsData.some((client) => client.name === newClient.name);
-    if(clientExist){
+    const clientExist = clientsData.some(
+      (client) => client.name === newClient.name
+    );
+    if (clientExist) {
       toast.error("Klijent sa unetim imenom već postoji");
       return;
     }
-    
+
+    if(!newClient.name){
+      toast.error("Morate dodati ime klijentu! ")
+      return;
+    }
+
     try {
       const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
       await addDoc(clientsCollectionRef, newClient);
@@ -177,7 +191,7 @@ export default function Customers() {
       )}
 
       {editClientClicked && (
-        <EditClientModal 
+        <EditClientModal
           name={clientName}
           phone={clientPhone}
           instagram={clientInstagram}
@@ -202,29 +216,10 @@ export default function Customers() {
       </div>
 
       {clientsData.length > 0 &&
-        clientsData.map((client: Client) => ( 
+        clientsData.map((client: Client) => (
           <div key={client.id} className="client-container">
-            <div className="client-info-container">
-              <span className="client-name">{client.name}</span>
-              <span className="client-phone">{client.phone}</span>
-            </div>
-
-          <div className="client-icons-container">
             <div
-              className="profile-icon-container"
-              onClick={() => {
-                setProfileClicked(true);
-                setClientName(client.name);
-                setClientPhone(client.phone);
-                setClientInstagram(client.instagram);
-                setClientMail(client.email);
-                setClientNote(client.note);
-              }}
-            >
-              <AccountCircleIcon sx={{ fontSize: 30 }} />
-            </div>
-            <div
-              className="edit-icon-container"
+              className="client-info-container"
               onClick={() => {
                 setEditClientClicked(true);
                 setClientName(client.name);
@@ -235,20 +230,37 @@ export default function Customers() {
                 setSelectedClient(client.id as string);
               }}
             >
-              <CreateIcon sx={{ fontSize: 30 }} />
+              <span className="client-name">{client.name}</span>
+              <span className="client-phone">{client.phone}</span>
             </div>
-            <div
-              className="delete-icon-container"
-              onClick={() => {
-                setSelectedClient(client.id as string);
-                setDeleteClicked(true);
-              }}
-            >
-              <DeleteIcon sx={{ fontSize: 30 }} />
+
+            <div className="client-icons-container">
+              <div
+                className="profile-icon-container"
+                onClick={() => {
+                  setProfileClicked(true);
+                  setClientName(client.name);
+                  setClientPhone(client.phone);
+                  setClientInstagram(client.instagram);
+                  setClientMail(client.email);
+                  setClientNote(client.note);
+                }}
+              >
+                <AccountCircleIcon sx={{ fontSize: 30 }} />
+              </div>
+
+              <div
+                className="delete-icon-container"
+                onClick={() => {
+                  setSelectedClient(client.id as string);
+                  setDeleteClicked(true);
+                }}
+              >
+                <DeleteIcon sx={{ fontSize: 30 }} />
+              </div>
             </div>
           </div>
-        </div>
-       ))}
+        ))}
       <NavBar />
     </div>
   );

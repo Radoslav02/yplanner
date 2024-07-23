@@ -1,4 +1,4 @@
-import "./Modals.scss";
+import "./ShowProfileModal.scss";
 
 interface ShowProfileModalProps {
   heading: string;
@@ -14,17 +14,22 @@ export default function ProfileModal(props: ShowProfileModalProps) {
   const {close, name, phone, instagram, mail, note } = props;
 
   return (
-    <div className="modal-container">
-      <div className="modal-content">
-        <div className="modal-heading">Klijent</div>
-        <div className="client-modal-content">
-          <span>Ime: {name}</span>
-          <span>Broj telefona: {phone}</span>
-          <span>Instagram: {instagram}</span>
-          <span>E-mail: {mail}</span>
-          <span>Note: {note}</span>
+    <div className="profile-modal-container">
+      <div className="profile-modal-content">
+        <div className="profile-modal-heading">Klijent</div>
+        <div className="profile-modal-text-container">
+          <span className="titles">Ime:</span>
+          <span className="description">{name}</span>
+          <span className="titles">Broj telefona:</span>
+          <span className="description">{phone}</span>
+          <span className="titles">Instagram:</span>
+          <span className="description">{instagram}</span>
+          <span className="titles">E-mail:</span>
+          <span className="description">{mail}</span>
+          <span className="titles">Note:</span>
+          <span className="description">{note}</span>
         </div>
-        <div className="modal-buttons-wrapper">
+        <div className="profile-modal-buttons-wrapper">
           <button onClick={close}>zatvori</button>
         </div>
       </div>

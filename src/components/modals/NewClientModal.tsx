@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Client } from "../../models/client";
-import "./Modals.scss";
+import "./NewClientModal.scss";
 
 interface NewClientProps {
   close: () => void;
@@ -28,37 +28,40 @@ export default function NewClientModal(props: NewClientProps) {
   };
 
   return (
-    <div className="modal-container">
-      <div className="modal-content" style={{ height: "270px" }}>
-        <div className="modal-heading">Novi klijent</div>
-        <form className="modal-form">
-          <div className="form-group">
-            <label>Ime</label>
+    <div className="new-modal-container">
+      <div className="new-modal-content">
+        <div className="new-modal-heading">Novi klijent</div>
+        <form className="new-modal-form">
+          <div className="new-form-group">
+            <label className="titles">Ime</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
-          <div className="form-group">
-            <label>Telefon</label>
+          <div className="new-form-group">
+            <label className="titles">Telefon</label>
             <input type="number" onChange={(e) => setPhone(parseInt(e.target.value))}
             />
           </div>
-          <div className="form-group">
-            <label>Instagram</label>
+          <div className="new-form-group">
+            <label className="titles">Instagram</label>
             <input type="text" onChange={(e) => setInstagram(e.target.value)} />
           </div>
-          <div className="form-group">
-            <label>E-mail</label>
+          <div className="new-form-group">
+            <label className="titles">E-mail</label>
             <input type="text" onChange={(e) => setEmail(e.target.value)} />
           </div>
-          <div className="form-group">
-            <label htmlFor="service">Note</label>
-            <input type="text" onChange={(e) => setNote(e.target.value)} />
+          <div className="new-form-group">
+            <label className="titles">Note</label>
+            <textarea
+              onChange={(e) => setNote(e.target.value)}
+              placeholder={note}
+            />
           </div>
         </form>
-        <div className="modal-buttons-wrapper">
+        <div className="new-modal-buttons-wrapper">
           <button onClick={handleSave}>sačuvaj</button>
           <button onClick={close}>zanemari</button>
         </div>
