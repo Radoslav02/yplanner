@@ -21,6 +21,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NewClientModal from "../modals/NewClientModal";
 import EditClientModal from "../modals/EditClientModal";
 import SearchIcon from "@mui/icons-material/Search";
+import Loading from "../Loading/Loading";
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([]);
@@ -31,6 +32,7 @@ export default function Customers() {
   const [editClientClicked, setEditClientClicked] = useState<boolean>(false);
   const [searchedClient, setSearchedClient] = useState<string>("");
   const [filteredClientsData, setFilteredClientsData] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [clientName, setClientName] = useState<string>("");
   const [clientPhone, setClientPhone] = useState<number>(0);
@@ -51,6 +53,7 @@ export default function Customers() {
   }, [clientsData]);
 
   async function fetchClients() {
+    setIsLoading(true)
     try {
       const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
       const clientDocs = await getDocs(clientsCollectionRef);
@@ -66,11 +69,15 @@ export default function Customers() {
         return nameA.localeCompare(nameB, undefined, { sensitivity: "base" });
       });
 
+     
       setClientsData(sortedClients);
       setFilteredClientsData(sortedClients);
+      
     } catch (error) {
       console.error("Error fetching clients", error);
       toast.error("Error fetching clients");
+    }finally{
+      setIsLoading(false);
     }
   }
 
@@ -249,7 +256,7 @@ export default function Customers() {
         />
       </div>
 
-      {filteredClientsData.length > 0 &&
+      {isLoading ? <Loading /> : (filteredClientsData.length > 0 &&
         filteredClientsData.map((client: Client) => (
           <div key={client.id} className="client-container">
             <div
@@ -294,7 +301,7 @@ export default function Customers() {
               </div>
             </div>
           </div>
-        ))}
+        )))}
       <NavBar />
     </div>
   );
