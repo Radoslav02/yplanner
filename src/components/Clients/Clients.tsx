@@ -12,7 +12,6 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
-import CreateIcon from "@mui/icons-material/Create";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Client } from "../../models/client";
