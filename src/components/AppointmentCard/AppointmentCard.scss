@@ -25,7 +25,15 @@
     align-items: center;
     font-weight: 600;
     color: #8e604a;
+    position: relative;
+
+    .icon {
+      position: absolute;
+      right: 10px;
+      color: #EDCFC0;
+    }
   }
+
 
   .apointment-content {
     width: 100%;

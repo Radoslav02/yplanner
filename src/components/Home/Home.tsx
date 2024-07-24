@@ -6,13 +6,20 @@ import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import { truncateDateString } from "../../helpers/truncateDateString";
 import { addOneWeek } from "../../helpers/addOneWeek";
 import { subtractOneWeek } from "../../helpers/subtractOneWeek";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { Appointment } from "../../models/appointment";
 import DeleteModal from "../modals/DeleteModal";
 import NewAppointmentModal from "../modals/NewAppointmentModal";
+import EditAppointmentModal from "../modals/EditAppointmentModal";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
@@ -22,8 +29,12 @@ export default function Home() {
   );
   const [defaultDate, setDefaultDate] = useState<string>("");
   const [deleteClicked, setDeleteClicked] = useState<boolean>(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<string>("");
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment>(
+    {} as Appointment
+  );
   const [addAppointmentClicked, setAddAppointmentClick] =
+    useState<boolean>(false);
+  const [editAppointmentClicked, setEditAppointmentClicked] =
     useState<boolean>(false);
 
   const { user } = useAuth();
@@ -49,7 +60,6 @@ export default function Home() {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(appointmentsData);
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -74,6 +84,21 @@ export default function Home() {
     } catch (error) {
       console.error("Error deleting appointment:", error);
       toast.error("Error deleting appointment");
+    }
+  }
+
+  async function addAppointment(newClient: Appointment) {
+    try {
+      const clientsCollectionRef = collection(
+        db,
+        `users/${user!.uid}/appointments`
+      );
+      await addDoc(clientsCollectionRef, newClient);
+      toast.success("Termin uspešno dodat");
+      close();
+    } catch (error) {
+      console.error("Error adding termin:", error);
+      toast.error("Greška pri dodavanju termina");
     }
   }
 
@@ -109,7 +134,7 @@ export default function Home() {
   }
 
   function confirmDelete() {
-    deleteAppointment(selectedAppointment);
+    deleteAppointment(selectedAppointment.id!);
   }
 
   function closeNewAppointment() {
@@ -117,11 +142,20 @@ export default function Home() {
   }
 
   function saveAppointment(appointment: Appointment) {
-    console.log(appointment);
+    addAppointment(appointment);
+    closeNewAppointment();
+    fetchAppointments();
   }
 
   return (
     <div className="home-container">
+      {editAppointmentClicked && (
+        <EditAppointmentModal
+          close={closeNewAppointment}
+          confirm={saveAppointment}
+          defaultDate={defaultDate}
+        />
+      )}
       {deleteClicked && (
         <DeleteModal
           heading={"termin"}
@@ -153,6 +187,7 @@ export default function Home() {
                 setSelectedAppointment={setSelectedAppointment}
                 setAppointmentClicked={setAddAppointmentClick}
                 setDefaultDate={setDefaultDate}
+                setEditAppointmentClicked={setEditAppointmentClicked}
               />
             </div>
           ))}

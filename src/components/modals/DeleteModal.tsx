@@ -1,4 +1,4 @@
-import "./Modals.scss";
+import "./NewAppointment.scss";
 
 interface DeleteModalProps {
     heading: string;
