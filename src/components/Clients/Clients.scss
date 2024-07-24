@@ -4,14 +4,14 @@ body {
   padding: 0;
 }
 
-.client-container {
+.client-container-wrapper {
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   padding-top: 20px;
+  padding-bottom: 70px; // Add space for the NavBar
 
   .new-client-container {
     color: #edcfc0;
@@ -25,6 +25,51 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .search-client-container {
+    position: relative; 
+  
+    .search-icon-container {
+      position: absolute; 
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%); 
+      width: 35px; 
+      height: 35px; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #D6BDB2;
+      border: 1px solid #8e604a;
+      border-radius: 10px 0 0 10px; 
+      color: #8e604a;
+      box-sizing: border-box; 
+      z-index: 1;
+     
+      
+    }
+  
+    .search-input {
+      @extend .new-client-container;
+      color: #8e604a;
+      border: 1px solid #8e604a;
+      border-radius: 10px;
+      width: 300px;
+      height: 35px;
+      filter: drop-shadow(1px 1px 1px #000000);
+      background-color: #edf2f8;
+      text-align: center;
+      line-height: 35px;
+      padding: 0 10px;
+      padding-left: 40px; 
+      box-sizing: border-box;
+  
+      &::placeholder {
+        color: #8e604a;
+        opacity: 1;
+      }
+    }
   }
 
   .client-title-container {
@@ -46,15 +91,18 @@ body {
     filter: drop-shadow(2px 3px 3px #000000);
     padding: 10px 20px;
     flex-direction: row;
+    gap: 15px;
 
     .client-info-container {
       display: flex;
-      flex-direction: row;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       flex: 1;
       color: #8e604a !important;
       font-weight: bold;
       gap: 10px;
+      max-height: 100px; 
+      overflow-y: auto; 
 
       .client-name,
       .client-phone {
@@ -70,14 +118,15 @@ body {
 
     .client-icons-container {
       display: flex;
-      gap: 10px;
+      gap: 15px;
 
       .profile-icon-container,
       .edit-icon-container,
       .delete-icon-container {
         color: #8e604a;
+        transition: color 0.3s;
 
-        &:active {
+        &:hover {
           color: #ffffff;
         }
       }
