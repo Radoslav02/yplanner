@@ -40,7 +40,7 @@ export default function EditMaterialModal(props: EditMaterialProps) {
   return (
     <div className="edit-modal-container">
       <div className="edit-modal-content">
-        <div className="edit-modal-heading">Izmena klijenta</div>
+        <div className="edit-modal-heading">Izmena materijala</div>
         <form className="edit-modal-form">
           <div className="edit-form-group">
             <label className="titles">Proizvođač:</label>
