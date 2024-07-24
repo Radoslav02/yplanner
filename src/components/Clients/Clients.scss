@@ -12,8 +12,7 @@ body {
   align-items: center;
   gap: 20px;
   padding-top: 20px;
-  padding-bottom: 70px; 
-  
+  padding-bottom: 70px;
 
   .new-client-container {
     color: #edcfc0;
@@ -27,40 +26,35 @@ body {
     justify-content: center;
     align-items: center;
 
-    
-
-      .icon{
-        width: 30px;
-        height: 30px;
-        padding: 0;
-        margin: 0;
-      }
-    
+    .icon {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   .search-client-container {
-    position: relative; 
-  
+    position: relative;
+
     .search-icon-container {
-      position: absolute; 
+      position: absolute;
       left: 0;
       top: 50%;
-      transform: translateY(-50%); 
-      width: 35px; 
-      height: 35px; 
+      transform: translateY(-50%);
+      width: 35px;
+      height: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #D6BDB2;
+      background-color: #d6bdb2;
       border: 1px solid #8e604a;
-      border-radius: 10px 0 0 10px; 
+      border-radius: 10px 0 0 10px;
       color: #8e604a;
-      box-sizing: border-box; 
+      box-sizing: border-box;
       z-index: 1;
-     
-      
     }
-  
+
     .search-input {
       @extend .new-client-container;
       color: #8e604a;
@@ -73,9 +67,9 @@ body {
       text-align: center;
       line-height: 35px;
       padding: 0 10px;
-      padding-left: 40px; 
+      padding-left: 40px;
       box-sizing: border-box;
-  
+
       &::placeholder {
         color: #8e604a;
         opacity: 1;
@@ -113,8 +107,8 @@ body {
       color: #8e604a !important;
       font-weight: bold;
 
-      max-height: 100px; 
-      overflow-y: auto; 
+      max-height: 100px;
+      overflow-y: auto;
 
       .client-name,
       .client-phone {

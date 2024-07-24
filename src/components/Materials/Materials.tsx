@@ -71,7 +71,9 @@ export default function Customers() {
       const sortedMaterials = materialsData.sort((a, b) => {
         const manifacturerA = a.manifacturer;
         const manifacturerB = b.manifacturer;
-        return manifacturerA.localeCompare(manifacturerB, undefined, { sensitivity: "base" });
+        return manifacturerA.localeCompare(manifacturerB, undefined, {
+          sensitivity: "base",
+        });
       });
 
       setMaterialsData(sortedMaterials);
@@ -255,9 +257,7 @@ export default function Customers() {
           setAddMaterialClicked(true);
         }}
       >
-    
-          <AddCircleIcon sx={{ fontSize: 35 }} />
-        
+        <AddCircleIcon className="icon"/>
       </div>
 
       <div className="search-material-container">
