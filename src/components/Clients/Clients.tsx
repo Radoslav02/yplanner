@@ -53,7 +53,7 @@ export default function Customers() {
   }, [clientsData]);
 
   async function fetchClients() {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
       const clientDocs = await getDocs(clientsCollectionRef);
@@ -69,14 +69,12 @@ export default function Customers() {
         return nameA.localeCompare(nameB, undefined, { sensitivity: "base" });
       });
 
-     
       setClientsData(sortedClients);
       setFilteredClientsData(sortedClients);
-      
     } catch (error) {
       console.error("Error fetching clients", error);
       toast.error("Greška prilikom dobavljanja klijenata iz baze");
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   }
@@ -115,7 +113,9 @@ export default function Customers() {
       setClientsData(
         clientsData.filter((client: Client) => client.id !== clientId)
       );
+
       fetchClients();
+      setSearchedClient("");
       toast.success("Klijent uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
@@ -136,6 +136,7 @@ export default function Customers() {
       );
 
       fetchClients();
+      setSearchedClient("");
       toast.success("Klijent uspešno izmenjen");
       closeEditClientModal();
     } catch (error) {
@@ -240,9 +241,7 @@ export default function Customers() {
           setAddClientClicked(true);
         }}
       >
-        
-          <AddCircleIcon className="icon" />
-        
+        <AddCircleIcon className="icon" />
       </div>
 
       <div className="search-client-container">
@@ -258,7 +257,10 @@ export default function Customers() {
         />
       </div>
 
-      {isLoading ? <Loading /> : (filteredClientsData.length > 0 &&
+      {isLoading ? (
+        <Loading />
+      ) : (
+        filteredClientsData.length > 0 &&
         filteredClientsData.map((client: Client) => (
           <div key={client.id} className="client-container">
             <div
@@ -303,7 +305,8 @@ export default function Customers() {
               </div>
             </div>
           </div>
-        )))}
+        ))
+      )}
       <NavBar />
     </div>
   );
