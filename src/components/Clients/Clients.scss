@@ -2,6 +2,7 @@ body {
   background-color: #e8e8e8;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .client-container-wrapper {
@@ -12,19 +13,29 @@ body {
   gap: 20px;
   padding-top: 20px;
   padding-bottom: 70px; 
+  
 
   .new-client-container {
     color: #edcfc0;
     border: 1px solid #8e604a;
     border-radius: 10px;
-    width: 150px;
-    height: 35px;
+    width: 300px;
+    height: 35px !important;
     filter: drop-shadow(1px 1px 1px #000000);
-    padding-top: 5px;
     background-color: #edf2f8;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
+
+      .icon{
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        margin: 0;
+      }
+    
   }
 
   .search-client-container {
@@ -100,7 +111,7 @@ body {
       flex: 1;
       color: #8e604a !important;
       font-weight: bold;
-      gap: 10px;
+
       max-height: 100px; 
       overflow-y: auto; 
 

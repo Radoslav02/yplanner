@@ -38,7 +38,7 @@ export default function Customers() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [materialManifacturer, setMaterialManifacturer] = useState<string>("");
-  const [materialPrice, setMaterialPrice] = useState<number>(0);
+  const [materialPrice, setMaterialPrice] = useState<string>("");
   const [materialColor, setMaterialColor] = useState<string>("");
   const [materialType, setMaterialType] = useState<string>("");
 
@@ -78,7 +78,7 @@ export default function Customers() {
       setFilteredMaterialsData(sortedMaterials);
     } catch (error) {
       console.error("Error fetching Materials", error);
-      toast.error("Error fetching Materials");
+      toast.error("Greška pri dobavljanju materijala iz baze");
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +86,7 @@ export default function Customers() {
 
   async function addMaterial(newMaterial: Material) {
     if (!newMaterial.manifacturer) {
-      toast.error("Morate dodati proizvodjaca! ");
+      toast.error("Morate dodati proizvođaca! ");
       return;
     }
     if (!newMaterial.price) {
@@ -255,9 +255,9 @@ export default function Customers() {
           setAddMaterialClicked(true);
         }}
       >
-        <div className="new-materialtIcon-container">
+    
           <AddCircleIcon sx={{ fontSize: 35 }} />
-        </div>
+        
       </div>
 
       <div className="search-material-container">
@@ -267,7 +267,7 @@ export default function Customers() {
         <input
           className="search-input"
           type="text"
-          placeholder="Pretrazite pomocu proizvodjaca"
+          placeholder="Pretražite pomoću proizvođača"
           onChange={handleSearchChange}
           value={searchedMaterial}
         />

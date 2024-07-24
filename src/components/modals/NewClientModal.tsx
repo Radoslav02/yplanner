@@ -11,7 +11,7 @@ export default function NewClientModal(props: NewClientProps) {
   const { close, confirm } = props;
 
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState("");
   const [instagram, setInstagram] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
@@ -33,7 +33,7 @@ export default function NewClientModal(props: NewClientProps) {
         <div className="new-modal-heading">Novi klijent</div>
         <form className="new-modal-form">
           <div className="new-form-group">
-            <label className="titles">Ime</label>
+            <label className="titles">Ime:</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
@@ -41,20 +41,20 @@ export default function NewClientModal(props: NewClientProps) {
             />
           </div>
           <div className="new-form-group">
-            <label className="titles">Telefon</label>
-            <input type="number" onChange={(e) => setPhone(parseInt(e.target.value))}
+            <label className="titles">Telefon:</label>
+            <input type="tel" onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="new-form-group">
-            <label className="titles">Instagram</label>
+            <label className="titles">Instagram:</label>
             <input type="text" onChange={(e) => setInstagram(e.target.value)} />
           </div>
           <div className="new-form-group">
-            <label className="titles">E-mail</label>
+            <label className="titles">E-mail:</label>
             <input type="text" onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="new-form-group">
-            <label className="titles">Note</label>
+            <label className="titles">Note:</label>
             <textarea
               onChange={(e) => setNote(e.target.value)}
               placeholder={note}
