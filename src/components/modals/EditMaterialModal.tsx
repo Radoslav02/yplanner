@@ -8,7 +8,7 @@ interface EditMaterialProps {
     color: string;
     manifacturer: string;
     type: string;
-    price: number;
+    price: string;
 }
 
 export default function EditMaterialModal(props: EditMaterialProps) {
@@ -40,10 +40,10 @@ export default function EditMaterialModal(props: EditMaterialProps) {
   return (
     <div className="edit-modal-container">
       <div className="edit-modal-content">
-        <div className="edit-modal-heading">Izmena klijenta</div>
+        <div className="edit-modal-heading">Izmena materijala</div>
         <form className="edit-modal-form">
           <div className="edit-form-group">
-            <label className="titles">Proizvodjac:</label>
+            <label className="titles">Proizvođač:</label>
             <input
               type="text"
               value={materialManifacturer}
@@ -70,11 +70,11 @@ export default function EditMaterialModal(props: EditMaterialProps) {
             />
           </div>
           <div className="edit-form-group">
-            <label className="titles">Nabavna cena:</label>
+            <label className="titles">Nabavna cena(din):</label>
             <input
-              type="number"
+              type="tel"
               value={materialPrice}
-              onChange={(e) => setMaterialPrice(parseInt(e.target.value))}
+              onChange={(e) => setMaterialPrice(e.target.value)}
               placeholder={`${price}`}
             />
           </div>

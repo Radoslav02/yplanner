@@ -38,7 +38,7 @@ export default function Customers() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [materialManifacturer, setMaterialManifacturer] = useState<string>("");
-  const [materialPrice, setMaterialPrice] = useState<number>(0);
+  const [materialPrice, setMaterialPrice] = useState<string>("");
   const [materialColor, setMaterialColor] = useState<string>("");
   const [materialType, setMaterialType] = useState<string>("");
 
@@ -71,14 +71,16 @@ export default function Customers() {
       const sortedMaterials = materialsData.sort((a, b) => {
         const manifacturerA = a.manifacturer;
         const manifacturerB = b.manifacturer;
-        return manifacturerA.localeCompare(manifacturerB, undefined, { sensitivity: "base" });
+        return manifacturerA.localeCompare(manifacturerB, undefined, {
+          sensitivity: "base",
+        });
       });
 
       setMaterialsData(sortedMaterials);
       setFilteredMaterialsData(sortedMaterials);
     } catch (error) {
       console.error("Error fetching Materials", error);
-      toast.error("Error fetching Materials");
+      toast.error("Greška pri dobavljanju materijala iz baze");
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +88,7 @@ export default function Customers() {
 
   async function addMaterial(newMaterial: Material) {
     if (!newMaterial.manifacturer) {
-      toast.error("Morate dodati proizvodjaca! ");
+      toast.error("Morate dodati proizvođaca! ");
       return;
     }
     if (!newMaterial.price) {
@@ -255,9 +257,7 @@ export default function Customers() {
           setAddMaterialClicked(true);
         }}
       >
-        <div className="new-materialtIcon-container">
-          <AddCircleIcon sx={{ fontSize: 35 }} />
-        </div>
+        <AddCircleIcon className="icon"/>
       </div>
 
       <div className="search-material-container">
@@ -267,7 +267,7 @@ export default function Customers() {
         <input
           className="search-input"
           type="text"
-          placeholder="Pretrazite pomocu proizvodjaca"
+          placeholder="Pretražite pomoću proizvođača"
           onChange={handleSearchChange}
           value={searchedMaterial}
         />

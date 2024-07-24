@@ -11,7 +11,7 @@ interface NewMaterialProps {
     const { close, confirm } = props;
   
     const [manifacturer, setManifacturer] = useState<string>("");
-    const [price, setPrice] = useState<number>(0);
+    const [price, setPrice] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const [type, setType] = useState<string>("");
   
@@ -31,7 +31,7 @@ interface NewMaterialProps {
           <div className="new-modal-heading">Novi klijent</div>
           <form className="new-modal-form">
             <div className="new-form-group">
-              <label className="titles">Proizvodjac:</label>
+              <label className="titles">Proizvođač:</label>
               <input
                 type="text"
                 onChange={(e) => setManifacturer(e.target.value)}
@@ -48,8 +48,8 @@ interface NewMaterialProps {
               <input type="text" onChange={(e) => setColor(e.target.value)} />
             </div>
             <div className="new-form-group">
-              <label className="titles">Nabavna cena:</label>
-              <input type="number" onChange={(e) => setPrice(parseInt(e.target.value))} />
+              <label className="titles">Nabavna cena(din):</label>
+              <input type="tel" onChange={(e) => setPrice(e.target.value)} />
             </div>
           </form>
           <div className="new-modal-buttons-wrapper">

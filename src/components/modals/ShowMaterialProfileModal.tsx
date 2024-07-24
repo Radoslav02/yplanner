@@ -5,7 +5,7 @@ interface ShowMaterialProfileModalProps {
     color: string;
     manifacturer: string;
     type: string;
-    price: number;
+    price: string;
     close: () => void;
   }
   
@@ -17,7 +17,7 @@ interface ShowMaterialProfileModalProps {
         <div className="profile-modal-content">
           <div className="profile-modal-heading">Klijent</div>
           <div className="profile-modal-text-container">
-            <span className="titles">Proizvodjac:</span>
+            <span className="titles">Proizvođač:</span>
             <span className="description">{manifacturer}</span>
             <span className="titles">Tip:</span>
             <span className="description">{type}</span>

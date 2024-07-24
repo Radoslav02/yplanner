@@ -35,7 +35,7 @@ export default function Customers() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [clientName, setClientName] = useState<string>("");
-  const [clientPhone, setClientPhone] = useState<number>(0);
+  const [clientPhone, setClientPhone] = useState<string>("");
   const [clientInstagram, setClientInstagram] = useState<string>("");
   const [clientMail, setClientMail] = useState<string>("");
   const [clientNote, setClientNote] = useState<string>("");
@@ -53,7 +53,7 @@ export default function Customers() {
   }, [clientsData]);
 
   async function fetchClients() {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
       const clientDocs = await getDocs(clientsCollectionRef);
@@ -69,14 +69,12 @@ export default function Customers() {
         return nameA.localeCompare(nameB, undefined, { sensitivity: "base" });
       });
 
-     
       setClientsData(sortedClients);
       setFilteredClientsData(sortedClients);
-      
     } catch (error) {
       console.error("Error fetching clients", error);
-      toast.error("Error fetching clients");
-    }finally{
+      toast.error("Greška prilikom dobavljanja klijenata iz baze");
+    } finally {
       setIsLoading(false);
     }
   }
@@ -115,6 +113,9 @@ export default function Customers() {
       setClientsData(
         clientsData.filter((client: Client) => client.id !== clientId)
       );
+
+      fetchClients();
+      setSearchedClient("");
       toast.success("Klijent uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
@@ -134,6 +135,8 @@ export default function Customers() {
         )
       );
 
+      fetchClients();
+      setSearchedClient("");
       toast.success("Klijent uspešno izmenjen");
       closeEditClientModal();
     } catch (error) {
@@ -238,9 +241,7 @@ export default function Customers() {
           setAddClientClicked(true);
         }}
       >
-        <div className="new-clientIcon-container">
-          <AddCircleIcon sx={{ fontSize: 35 }} />
-        </div>
+        <AddCircleIcon className="icon" />
       </div>
 
       <div className="search-client-container">
@@ -250,13 +251,16 @@ export default function Customers() {
         <input
           className="search-input"
           type="text"
-          placeholder="Pretrazite pomocu imena"
+          placeholder="Pretražite pomoću imena"
           onChange={handleSearchChange}
           value={searchedClient}
         />
       </div>
 
-      {isLoading ? <Loading /> : (filteredClientsData.length > 0 &&
+      {isLoading ? (
+        <Loading />
+      ) : (
+        filteredClientsData.length > 0 &&
         filteredClientsData.map((client: Client) => (
           <div key={client.id} className="client-container">
             <div
@@ -301,7 +305,8 @@ export default function Customers() {
               </div>
             </div>
           </div>
-        )))}
+        ))
+      )}
       <NavBar />
     </div>
   );

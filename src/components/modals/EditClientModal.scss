@@ -2,7 +2,6 @@
     width: 100%;
     height: 100%;
     position: fixed;
-    overflow-y: auto; 
     inset: 0;
     top: 0;
     background-color: rgba(128, 128, 128, 0.5);
@@ -14,8 +13,7 @@
     letter-spacing: 1px;
 
     .edit-modal-content {
-        width: 300px;
-        height: 400px; 
+        width: 300px; 
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -25,6 +23,7 @@
         padding: 20px;
         position: relative;
         overflow: hidden;
+        
 
         .edit-modal-heading {
             height: 30px;
@@ -43,12 +42,13 @@
         }
 
         .edit-modal-form {
+            margin-top: 15px;
+            margin-bottom: 15px;
             width: 100%;
             height: calc(100% - 70px); 
             display: flex;
             flex-direction: column;
             gap: 10px;
-            overflow-y: auto; 
 
             .edit-form-group {
                 display: flex;
@@ -58,7 +58,7 @@
 
                 label.titles {
                     font-weight: bold;
-                    color: #8e604a;
+                    color: #d9d9d9;
                     margin-bottom: 5px;
                 }
 
@@ -69,15 +69,16 @@
                     border: 1px solid #8e604a;
                     border-radius: 5px;
                     font-family: inherit;
-                    box-sizing: border-box; // Include padding and border in width
-                    resize: vertical; // Allow vertical resizing
+                    box-sizing: border-box; 
+                    resize: vertical; 
                     background-color: #ffffff;
                 }
 
                 textarea {
-                    min-height: 100px; // Set a minimum height
-                    overflow: auto; // Allow scrolling within textarea
-                    white-space: pre-wrap; // Ensure text wraps properly
+                    height: 25px; 
+                    overflow: auto; 
+                    white-space: pre-wrap; 
+                    height: 25px; 
                 }
             }
         }

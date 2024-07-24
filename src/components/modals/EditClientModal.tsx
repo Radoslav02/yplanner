@@ -6,7 +6,7 @@ interface EditClientProps {
   close: () => void;
   confirm(client: Client): void;
   name: string;
-  phone: number;
+  phone: string;
   email: string;
   instagram: string;
   note: string;
@@ -46,7 +46,7 @@ export default function EditClientModal(props: EditClientProps) {
         <div className="edit-modal-heading">Izmena klijenta</div>
         <form className="edit-modal-form">
           <div className="edit-form-group">
-            <label className="titles">Ime</label>
+            <label className="titles">Ime:</label>
             <input
               type="text"
               value={clientName}
@@ -55,16 +55,16 @@ export default function EditClientModal(props: EditClientProps) {
             />
           </div>
           <div className="edit-form-group">
-            <label className="titles">Telefon</label>
+            <label className="titles">Telefon:</label>
             <input
-              type="number"
+              type="tel"
               value={clientPhone}
-              onChange={(e) => setClientPhone(parseInt(e.target.value))}
+              onChange={(e) => setClientPhone(e.target.value)}
               placeholder={`${phone}`}
             />
           </div>
           <div className="edit-form-group">
-            <label className="titles">Instagram</label>
+            <label className="titles">Instagram:</label>
             <input
               type="text"
               value={clientInstagram}
@@ -73,7 +73,7 @@ export default function EditClientModal(props: EditClientProps) {
             />
           </div>
           <div className="edit-form-group">
-            <label className="titles">E-mail</label>
+            <label className="titles">E-mail:</label>
             <input
               type="text"
               value={clientEmail}

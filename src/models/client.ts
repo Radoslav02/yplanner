@@ -4,5 +4,5 @@ export interface Client{
     instagram: string,
     name: string,
     note: string,
-    phone: number
+    phone: string
 }

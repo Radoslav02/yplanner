@@ -3,7 +3,7 @@ import "./ShowProfileModal.scss";
 interface ShowProfileModalProps {
   heading: string;
   name: string;
-  phone: number;
+  phone: string;
   instagram: string;
   mail: string;
   note: string;
@@ -20,7 +20,7 @@ export default function ProfileModal(props: ShowProfileModalProps) {
         <div className="profile-modal-text-container">
           <span className="titles">Ime:</span>
           <span className="description">{name}</span>
-          <span className="titles">Broj telefona:</span>
+          <span className="titles">Telefona:</span>
           <span className="description">{phone}</span>
           <span className="titles">Instagram:</span>
           <span className="description">{instagram}</span>
