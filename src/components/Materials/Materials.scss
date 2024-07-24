@@ -1,5 +1,136 @@
-body{
-    background-color: #E8E8E8;
+body {
+    background-color: #e8e8e8;
     margin: 0;
     padding: 0;
-}
+  }
+  
+  .material-container-wrapper {
+    font-family: "Edu AU VIC WA NT Hand", cursive !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 70px; 
+  
+    .new-material-container {
+      color: #edcfc0;
+      border: 1px solid #8e604a;
+      border-radius: 10px;
+      width: 150px;
+      height: 35px;
+      filter: drop-shadow(1px 1px 1px #000000);
+      padding-top: 5px;
+      background-color: #edf2f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .search-material-container {
+      position: relative; 
+    
+      .search-icon-container {
+        position: absolute; 
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%); 
+        width: 35px; 
+        height: 35px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #D6BDB2;
+        border: 1px solid #8e604a;
+        border-radius: 10px 0 0 10px; 
+        color: #8e604a;
+        box-sizing: border-box; 
+        z-index: 1;
+       
+        
+      }
+    
+      .search-input {
+        @extend .new-material-container;
+        color: #8e604a;
+        border: 1px solid #8e604a;
+        border-radius: 10px;
+        width: 300px;
+        height: 35px;
+        filter: drop-shadow(1px 1px 1px #000000);
+        background-color: #edf2f8;
+        text-align: center;
+        line-height: 35px;
+        padding: 0 10px;
+        padding-left: 40px; 
+        box-sizing: border-box;
+    
+        &::placeholder {
+          color: #8e604a;
+          opacity: 1;
+        }
+      }
+    }
+  
+    .material-title-container {
+      color: #8e604a;
+      font-size: 50px;
+      filter: drop-shadow(1px 1px 1px #000000);
+      padding-bottom: 20px;
+    }
+  
+    .material-container {
+      background-color: #edcfc0;
+      width: 300px;
+      font-size: 16px !important;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #8e604a;
+      filter: drop-shadow(2px 3px 3px #000000);
+      padding: 10px 20px;
+      flex-direction: row;
+      gap: 15px;
+  
+      .material-info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        color: #8e604a !important;
+        font-weight: bold;
+        gap: 10px;
+        max-height: 100px; 
+        overflow-y: auto; 
+  
+        .material-name,
+        .material-phone {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+  
+        .material-phone {
+          margin-top: 0;
+        }
+      }
+  
+      .material-icons-container {
+        display: flex;
+        gap: 15px;
+  
+        .profile-icon-container,
+        .edit-icon-container,
+        .delete-icon-container {
+          color: #8e604a;
+          transition: color 0.3s;
+  
+          &:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+  
