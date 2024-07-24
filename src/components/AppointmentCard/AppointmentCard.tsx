@@ -7,9 +7,10 @@ interface AppointmentCardProps {
     day: string;
     data: Appointment[] | [];
     setDeleteClicked: React.Dispatch<React.SetStateAction<boolean>>;
-    setSelectedAppointment: React.Dispatch<React.SetStateAction<string>>;
+    setSelectedAppointment: React.Dispatch<React.SetStateAction<Appointment>>;
     setAppointmentClicked: React.Dispatch<React.SetStateAction<boolean>>;
     setDefaultDate: React.Dispatch<React.SetStateAction<string>>;
+    setEditAppointmentClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function AppointmentCard(props: AppointmentCardProps) {
@@ -20,11 +21,22 @@ export default function AppointmentCard(props: AppointmentCardProps) {
         setSelectedAppointment,
         setAppointmentClicked,
         setDefaultDate,
+        setEditAppointmentClicked,
     } = props;
 
     return (
         <div className="appointment-container">
-            <div className="appointment-header">{day.slice(0, -4)}</div>
+            <div className="appointment-header">
+                {day.slice(0, -4)}
+                <AddCircleIcon
+                    sx={{ width: "30px", height: "30px" }}
+                    className="icon"
+                    onClick={() => {
+                        setAppointmentClicked(true);
+                        setDefaultDate(day.slice(day.indexOf("-") + 2));
+                    }}
+                />
+            </div>
             <div className="apointment-content">
                 {data.length ? (
                     data.map((appointment: Appointment) => (
@@ -33,7 +45,12 @@ export default function AppointmentCard(props: AppointmentCardProps) {
                             className="appointment"
                             id={appointment.done ? "done" : ""}
                         >
-                            <span>
+                            <span
+                                onClick={() => {
+                                    setSelectedAppointment(appointment);
+                                    setEditAppointmentClicked(true);
+                                }}
+                            >
                                 <p>{appointment.hour}h</p>
                                 <p>{appointment.name}</p>
                                 <p>{appointment.service}</p>
@@ -42,7 +59,7 @@ export default function AppointmentCard(props: AppointmentCardProps) {
                                 className="crud-icon-wrapper"
                                 onClick={() => {
                                     setDeleteClicked(true);
-                                    setSelectedAppointment(appointment.id!);
+                                    setSelectedAppointment(appointment);
                                 }}
                             >
                                 <DeleteIcon className="icon"></DeleteIcon>

@@ -14,7 +14,7 @@ interface NewAppointmentProps {
     defaultDate: string;
 }
 
-export default function NewAppointmentModal(props: NewAppointmentProps) {
+export default function EditAppointmentModal(props: NewAppointmentProps) {
     const { close, confirm, defaultDate } = props;
 
     const { user } = useAuth();
@@ -134,6 +134,13 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
                                 </option>
                             ))}
                         </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="date">Beleška</label>
+                        <textarea
+                            rows={1}
+                            onChange={(e) => setNote(e.target.value)}
+                        />
                     </div>
                     <div className="form-group">
                         <label htmlFor="date">Beleška</label>

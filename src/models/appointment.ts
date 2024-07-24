@@ -4,7 +4,7 @@ export interface Appointment {
     done: boolean,
     name: string,
     hour: string,
-    price: string,
+    price?: string,
     note: string,
     service: string
 }
