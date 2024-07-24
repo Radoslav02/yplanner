@@ -6,7 +6,6 @@
   gap: 50px;
   width: 100%;
   height: 100vh;
-  font-family: "Edu AU VIC WA NT Hand", cursive !important;
 }
 
 .image-container {
@@ -29,6 +28,7 @@ input {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   padding-right: 30px;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
 .input-container {
@@ -71,6 +71,7 @@ button {
   filter: drop-shadow(2px 3px 3px #000000);
   text-align: center;
   color: white;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
 #error {
