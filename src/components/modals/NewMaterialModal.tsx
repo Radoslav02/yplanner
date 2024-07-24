@@ -40,7 +40,7 @@ interface NewMaterialProps {
             </div>
             <div className="new-form-group">
               <label className="titles">Tip:</label>
-              <input type="number" onChange={(e) => setType(e.target.value)}
+              <input type="text" onChange={(e) => setType(e.target.value)}
               />
             </div>
             <div className="new-form-group">
@@ -49,7 +49,7 @@ interface NewMaterialProps {
             </div>
             <div className="new-form-group">
               <label className="titles">Nabavna cena:</label>
-              <input type="text" onChange={(e) => setPrice(parseInt(e.target.value))} />
+              <input type="number" onChange={(e) => setPrice(parseInt(e.target.value))} />
             </div>
           </form>
           <div className="new-modal-buttons-wrapper">

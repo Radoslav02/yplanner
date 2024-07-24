@@ -72,7 +72,7 @@ export default function EditMaterialModal(props: EditMaterialProps) {
           <div className="edit-form-group">
             <label className="titles">Nabavna cena:</label>
             <input
-              type="text"
+              type="number"
               value={materialPrice}
               onChange={(e) => setMaterialPrice(parseInt(e.target.value))}
               placeholder={`${price}`}
