@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { Appointment } from "../../models/appointment";
@@ -7,48 +8,53 @@ import { collection, getDocs } from "firebase/firestore";
 import { Client } from "../../models/client";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
+import { Service } from "../../models/service";
+import { Material } from "../../models/material";
 
 interface NewAppointmentProps {
     close: () => void;
     confirm(appointment: Appointment): void;
-    defaultDate: string;
+    data: Appointment;
 }
 
 export default function EditAppointmentModal(props: NewAppointmentProps) {
-    const { close, confirm, defaultDate } = props;
+    const { close, confirm, data } = props;
 
     const { user } = useAuth();
 
-    const [date, setDate] = useState<string>(defaultDate)
-    const [client, setClient] = useState<string>("");
-    const [service, setService] = useState<string>("");
+    const [date, setDate] = useState<string>(formatDateTime(data));
+    const [client, setClient] = useState<string>(data.name);
+    const [service, setService] = useState<string>(data.service);
+    const [material, setMaterial] = useState<string>(data.material ?? '')
+    const [note, setNote] = useState<string>(data.note);
+    const [done, setDone] = useState<boolean>(data.done);
+    const [price, setPrice] = useState<string>(data.price ?? '0')
     const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
-    const [note, setNote] = useState<string>('')
+    const [services, setServices] = useState<Service[]>([] as Service[]);
+    const [materials, setMaterials] = useState<Material[]>([] as Material[]);
 
     // Placeholder data for clients and services
-    const services = ["Service 1", "Service 2", "Service 3"];
 
     useEffect(() => {
         fetchClients();
+        fetchServices();
+        fetchMaterials()
     }, []);
 
     const handleSave = () => {
         const newAppointment: Appointment = {
             date: cutTimeFromDate(date),
             name: client,
+            id: data.id,
             service,
             note,
-            done: false,
+            material,
+            price,
+            done,
             hour: getHoursFromDate(date),
         };
-
         confirm(newAppointment);
     };
-
-    function formatDateToLocalInput(date: string) {
-        const split = [...date.split(".")];
-        return `${split[2]}-${split[1]}-${split[0]}T08:00`;
-    }
 
     function getHoursFromDate(date: string) {
         const index = date.indexOf('T')
@@ -68,6 +74,12 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
         }
     }
 
+    function formatDateTime(data: Appointment) {
+        const date = data.date;
+        const formatedDate = date.split(".");
+        return `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}T${data.hour}`;
+    }
+
     async function fetchClients() {
         try {
             const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
@@ -83,16 +95,46 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
         }
     }
 
+    async function fetchServices() {
+        try {
+            const serviceCollectionRef = collection(db, `users/${user!.uid}/service`);
+            const servicesDocs = await getDocs(serviceCollectionRef);
+            const servicesData = servicesDocs.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setServices(servicesData as Service[]);
+        } catch (error) {
+            console.error("Error fetching clients");
+            toast.error("Error fetching clients");
+        }
+    }
+
+    async function fetchMaterials() {
+        try {
+            const materialCollectionRef = collection(db, `users/${user!.uid}/materials`);
+            const materialsDocs = await getDocs(materialCollectionRef);
+            const materialsData = materialsDocs.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setMaterials(materialsData as Material[]);
+        } catch (error) {
+            console.error("Error fetching clients");
+            toast.error("Error fetching clients");
+        }
+    }
+
     return (
         <div className="modal-container">
             <div className="modal-content">
-                <div className="modal-heading">Nov termin</div>
+                <div className="modal-heading">Izmeni termin</div>
                 <form className="modal-form">
                     <div className="form-group">
                         <label htmlFor="date">Vreme</label>
                         <input
                             type="datetime-local"
-                            defaultValue={formatDateToLocalInput(date)}
+                            defaultValue={date}
                             onChange={(e) => setDate(e.target.value)}
                             required
                         />
@@ -101,13 +143,15 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                         <label htmlFor="client">Klijent</label>
                         <select
                             id="client"
-                            value={client}
+                            defaultValue={data.name}
                             onChange={(e) => {
-                                setClient(e.target.value)
+                                setClient(e.target.value);
                             }}
                             required
                         >
-                            <option value="" disabled>izaberi klijenta</option>
+                            <option value="" disabled>
+                                izaberi klijenta
+                            </option>
                             {clientsData
                                 ?.map((client: Client) => client.name)
                                 .map((client) => (
@@ -121,34 +165,73 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                         <label htmlFor="service">Usluga</label>
                         <select
                             id="service"
-                            value={service}
+                            defaultValue={data.service}
                             onChange={(e) => setService(e.target.value)}
                             required
                         >
                             <option value="" disabled>
                                 izaberi uslugu
                             </option>
-                            {services.map((service) => (
-                                <option key={service} value={service}>
-                                    {service}
-                                </option>
-                            ))}
+                            {services
+                                .map((service: Service) => service.type)
+                                .map((service) => (
+                                    <option key={service} value={service}>
+                                        {service}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                     <div className="form-group">
                         <label htmlFor="date">Beleška</label>
                         <textarea
                             rows={1}
+                            defaultValue={data.note}
                             onChange={(e) => setNote(e.target.value)}
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="date">Beleška</label>
-                        <textarea
-                            rows={1}
-                            onChange={(e) => setNote(e.target.value)}
-                        />
+                        <label htmlFor="service">Odrađeno</label>
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="status"
+                                name="status"
+                                defaultChecked={data.done}
+                                onChange={() => setDone((oldState: boolean) => !oldState)}
+                            />
+                        </div>
                     </div>
+                    {done && <div className="form-group">
+                        <label htmlFor="service">Cena</label>
+                        <div>
+                            <input
+                                type="number"
+                                id="price"
+                                defaultValue={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+                    </div>}
+                    {done && <div className="form-group">
+                        <label htmlFor="service">Materijal</label>
+                        <select
+                            id="service"
+                            defaultValue={data.material}
+                            onChange={(e) => setMaterial(e.target.value)}
+                            required
+                        >
+                            <option value="" disabled>
+                                izaberi materijal
+                            </option>
+                            {materials
+                                .map((material: Material) => material.type)
+                                .map((material: string) => (
+                                    <option key={material} value={material}>
+                                        {material}
+                                    </option>
+                                ))}
+                        </select>
+                    </div>}
                 </form>
                 <div className="modal-buttons-wrapper">
                     <button onClick={handleSave}>sačuvaj</button>

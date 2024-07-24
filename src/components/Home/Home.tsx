@@ -12,6 +12,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
@@ -87,20 +88,34 @@ export default function Home() {
     }
   }
 
-  async function addAppointment(newClient: Appointment) {
+  async function addAppointment(newAppointment: Appointment) {
     try {
-      const clientsCollectionRef = collection(
+      const appointmentCollectionRef = collection(
         db,
         `users/${user!.uid}/appointments`
       );
-      await addDoc(clientsCollectionRef, newClient);
+      await addDoc(appointmentCollectionRef, newAppointment);
       toast.success("Termin uspešno dodat");
-      close();
     } catch (error) {
       console.error("Error adding termin:", error);
       toast.error("Greška pri dodavanju termina");
     }
   }
+
+  async function editAppointment(newClient: Appointment) {
+    try {
+      const appointmentDocRef = doc(
+        db,
+        `users/${user!.uid}/appointments/${newClient.id}`
+      );
+      await updateDoc(appointmentDocRef, newClient as { [key: string]: any });
+      toast.success("Termin uspešno izmenjen");
+    } catch (error) {
+      console.error("Error adding termin:", error);
+      toast.error("Greška pri izmeni termina");
+    }
+  }
+
 
   function calcWeekDays() {
     const currentDate = new Date(relativeDay);
@@ -141,19 +156,29 @@ export default function Home() {
     setAddAppointmentClick(false);
   }
 
+  function closeEditAppointment() {
+    setEditAppointmentClicked(false)
+  }
+
   function saveAppointment(appointment: Appointment) {
     addAppointment(appointment);
     closeNewAppointment();
     fetchAppointments();
   }
 
+  function changeAppointment(appointment: Appointment) {
+    editAppointment(appointment)
+    closeEditAppointment()
+    fetchAppointments()
+  }
+
   return (
     <div className="home-container">
       {editAppointmentClicked && (
         <EditAppointmentModal
-          close={closeNewAppointment}
-          confirm={saveAppointment}
-          defaultDate={defaultDate}
+          close={closeEditAppointment}
+          confirm={changeAppointment}
+          data={selectedAppointment}
         />
       )}
       {deleteClicked && (

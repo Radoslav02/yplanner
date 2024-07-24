@@ -24,6 +24,15 @@ export default function AppointmentCard(props: AppointmentCardProps) {
         setEditAppointmentClicked,
     } = props;
 
+    // Helper function to convert hour string to a comparable number
+    const parseHour = (hour: string) => {
+        const [hours, minutes] = hour.split(':').map(Number);
+        return hours * 60 + minutes;
+    };
+
+    // Sort the data array by hour
+    const sortedData = data.slice().sort((a, b) => parseHour(a.hour) - parseHour(b.hour));
+
     return (
         <div className="appointment-container">
             <div className="appointment-header">
@@ -38,8 +47,8 @@ export default function AppointmentCard(props: AppointmentCardProps) {
                 />
             </div>
             <div className="apointment-content">
-                {data.length ? (
-                    data.map((appointment: Appointment) => (
+                {sortedData.length ? (
+                    sortedData.map((appointment: Appointment) => (
                         <div
                             key={appointment.id}
                             className="appointment"

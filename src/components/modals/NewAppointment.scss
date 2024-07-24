@@ -12,6 +12,9 @@
   align-items: center;
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   letter-spacing: 1px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
   .modal-content {
     min-width: 80vw;
@@ -60,6 +63,7 @@
           border-radius: 5px !important;
           border: 2px solid #d9d9d9 !important;
           padding: 0;
+          text-align: center;
           background-color: white;
           font-family: "Edu AU VIC WA NT Hand", cursive !important;
         }
@@ -68,6 +72,10 @@
         option {
           width: 204px !important;
           height: 34px !important;
+        }
+
+        #status {
+          accent-color: #d9d9d9 !important;
         }
       }
     }

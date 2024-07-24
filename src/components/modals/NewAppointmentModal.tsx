@@ -7,6 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { Client } from "../../models/client";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
+import { Service } from "../../models/service";
 
 interface NewAppointmentProps {
     close: () => void;
@@ -22,14 +23,13 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
     const [date, setDate] = useState<string>(defaultDate)
     const [client, setClient] = useState<string>("");
     const [service, setService] = useState<string>("");
-    const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
     const [note, setNote] = useState<string>('')
-
-    // Placeholder data for clients and services
-    const services = ["Service 1", "Service 2", "Service 3"];
+    const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
+    const [services, setServices] = useState<Service[]>([] as Service[])
 
     useEffect(() => {
-        fetchClients();
+        fetchClients()
+        fetchServices()
     }, []);
 
     const handleSave = () => {
@@ -83,6 +83,21 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
         }
     }
 
+    async function fetchServices() {
+        try {
+            const serviceCollectionRef = collection(db, `users/${user!.uid}/service`);
+            const servicesDocs = await getDocs(serviceCollectionRef);
+            const servicesData = servicesDocs.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setServices(servicesData as Service[]);
+        } catch (error) {
+            console.error("Error fetching clients");
+            toast.error("Error fetching clients");
+        }
+    }
+
     return (
         <div className="modal-container">
             <div className="modal-content">
@@ -128,7 +143,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
                             <option value="" disabled>
                                 izaberi uslugu
                             </option>
-                            {services.map((service) => (
+                            {services.map((service: Service) => service.type).map((service) => (
                                 <option key={service} value={service}>
                                     {service}
                                 </option>

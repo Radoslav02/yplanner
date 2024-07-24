@@ -5,6 +5,7 @@ export interface Appointment {
     name: string,
     hour: string,
     price?: string,
+    material?: string,
     note: string,
     service: string
 }
