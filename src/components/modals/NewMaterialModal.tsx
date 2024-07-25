@@ -28,7 +28,7 @@ interface NewMaterialProps {
     return (
       <div className="new-modal-container">
         <div className="new-modal-content">
-          <div className="new-modal-heading">Novi klijent</div>
+          <div className="new-modal-heading">Novi materijal</div>
           <form className="new-modal-form">
             <div className="new-form-group">
               <label className="titles">Proizvođač:</label>

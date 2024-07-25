@@ -82,7 +82,7 @@ export default function EditClientModal(props: EditClientProps) {
             />
           </div>
           <div className="edit-form-group">
-            <label className="titles">Note</label>
+            <label className="titles">Note:</label>
             <textarea
               value={clientNote}
               onChange={(e) => setClientNote(e.target.value)}
