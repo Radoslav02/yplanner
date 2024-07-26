@@ -48,9 +48,6 @@ export default function Customers() {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(clientsData);
-  }, [clientsData]);
 
   async function fetchClients() {
     setIsLoading(true);

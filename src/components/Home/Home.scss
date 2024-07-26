@@ -1,24 +1,49 @@
 .home-container {
-    width: 100%;
-    display: flex;
-    height: fit-content;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    position: relative;
-    padding-bottom: 60px;
-    font-family: "Edu AU VIC WA NT Hand", cursive !important;
+  width: 100%;
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  position: relative;
+  padding-bottom: 60px;
+  font-family: "Edu AU VIC WA NT Hand", cursive !important;
 }
 
 .appointments-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.left-swipe, .right-swipe {
-    height: 100vh;
+.calendar-icon {
+  position: fixed;
+  top: 20px;
+  left: 10px;
+  border-radius: 10px;
+  background-color: #edcfc0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .calendar {
+    color: #8e604a !important;
     width: 50px;
+    height: 50px;
+  }
+
+}
+
+.calendar-icon:active {
+  background-color: white;
+}
+
+.left-swipe,
+.right-swipe {
+  height: 100vh;
+  width: 50px;
 }

@@ -12,4 +12,16 @@
  z-index: 3;
  cursor: pointer;
  user-select: none !important;
+
+ button {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+ }
+
+ button:active {
+    color: #8E604A !important;
+ }
 }

@@ -37,14 +37,14 @@ export default function AppointmentCard(props: AppointmentCardProps) {
         <div className="appointment-container">
             <div className="appointment-header">
                 {day.slice(0, -4)}
-                <AddCircleIcon
+                {data.length > 0 && <AddCircleIcon
                     sx={{ width: "30px", height: "30px" }}
                     className="icon"
                     onClick={() => {
                         setAppointmentClicked(true);
                         setDefaultDate(day.slice(day.indexOf("-") + 2));
                     }}
-                />
+                />}
             </div>
             <div className="apointment-content">
                 {sortedData.length ? (

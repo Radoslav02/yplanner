@@ -21,6 +21,8 @@ import { Appointment } from "../../models/appointment";
 import DeleteModal from "../modals/DeleteModal";
 import NewAppointmentModal from "../modals/NewAppointmentModal";
 import EditAppointmentModal from "../modals/EditAppointmentModal";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import CalendarModal from "../modals/CalendarModal";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
@@ -37,6 +39,7 @@ export default function Home() {
     useState<boolean>(false);
   const [editAppointmentClicked, setEditAppointmentClicked] =
     useState<boolean>(false);
+  const [calendarClicked, setCalendarClicked] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -64,7 +67,7 @@ export default function Home() {
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
       console.error("Error fetching appointments:", error);
-      toast.error("Error fetching appointments");
+      toast.error("Greška pri dobavljanju termina");
     }
   }
 
@@ -116,7 +119,6 @@ export default function Home() {
     }
   }
 
-
   function calcWeekDays() {
     const currentDate = new Date(relativeDay);
     const dayOfWeek = currentDate.getDay();
@@ -157,7 +159,7 @@ export default function Home() {
   }
 
   function closeEditAppointment() {
-    setEditAppointmentClicked(false)
+    setEditAppointmentClicked(false);
   }
 
   function saveAppointment(appointment: Appointment) {
@@ -167,13 +169,19 @@ export default function Home() {
   }
 
   function changeAppointment(appointment: Appointment) {
-    editAppointment(appointment)
-    closeEditAppointment()
-    fetchAppointments()
+    editAppointment(appointment);
+    closeEditAppointment();
+    fetchAppointments();
   }
 
   return (
     <div className="home-container">
+      {calendarClicked && (
+        <CalendarModal
+          setRelativeDay={setRelativeDay}
+          setCalendarClicked={setCalendarClicked}
+        />
+      )}
       {editAppointmentClicked && (
         <EditAppointmentModal
           close={closeEditAppointment}
@@ -217,6 +225,12 @@ export default function Home() {
             </div>
           ))}
       </div>
+      <button
+        className="calendar-icon"
+        onClick={() => setCalendarClicked(true)}
+      >
+        <CalendarMonthIcon className="calendar" />
+      </button>
       <div
         className="right-swipe"
         onClick={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}

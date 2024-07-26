@@ -50,10 +50,6 @@ export default function Customers() {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(materialsData);
-  }, [materialsData]);
-
   async function fetchMaterials() {
     setIsLoading(true);
     try {
@@ -257,7 +253,7 @@ export default function Customers() {
           setAddMaterialClicked(true);
         }}
       >
-        <AddCircleIcon className="icon"/>
+        <AddCircleIcon className="icon" />
       </div>
 
       <div className="search-material-container">

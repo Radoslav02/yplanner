@@ -5,10 +5,10 @@ import "./EditMaterialModal.scss";
 interface EditMaterialProps {
   close: () => void;
   confirm(material: Material): void;
-    color: string;
-    manifacturer: string;
-    type: string;
-    price: string;
+  color: string;
+  manifacturer: string;
+  type: string;
+  price: string;
 }
 
 export default function EditMaterialModal(props: EditMaterialProps) {
@@ -18,7 +18,7 @@ export default function EditMaterialModal(props: EditMaterialProps) {
   const [materialManifacturer, setMaterialManifacturer] = useState(manifacturer);
   const [materialType, setmaterialType] = useState(type);
   const [materialPrice, setMaterialPrice] = useState(price);
-  
+
 
   useEffect(() => {
     setMaterialColor(color);
@@ -29,10 +29,10 @@ export default function EditMaterialModal(props: EditMaterialProps) {
 
   const handleSave = () => {
     const editedMaterial: Material = {
-        color: materialColor,
-        manifacturer: materialManifacturer,
-        type: materialType,
-        price: materialPrice,
+      color: materialColor,
+      manifacturer: materialManifacturer,
+      type: materialType,
+      price: materialPrice,
     };
     confirm(editedMaterial);
   };
