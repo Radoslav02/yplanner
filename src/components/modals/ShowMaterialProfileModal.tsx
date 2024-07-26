@@ -15,16 +15,24 @@ interface ShowMaterialProfileModalProps {
     return (
       <div className="profile-modal-container">
         <div className="profile-modal-content">
-          <div className="profile-modal-heading">Klijent</div>
+          <div className="profile-modal-heading">Materijal</div>
           <div className="profile-modal-text-container">
-            <span className="titles">Proizvođač:</span>
+            <div className="profile-content-wrapper">
+            <label className="titles">Proizvođač:</label>
             <span className="description">{manifacturer}</span>
-            <span className="titles">Tip:</span>
+            </div>
+            <div className="profile-content-wrapper">
+            <label className="titles">Tip:</label>
             <span className="description">{type}</span>
-            <span className="titles">Boja:</span>
+            </div>
+            <div className="profile-content-wrapper">
+            <label className="titles">Boja:</label>
             <span className="description">{color}</span>
-            <span className="titles">Nabavna cena:</span>
+            </div>
+            <div className="profile-content-wrapper">
+            <label className="titles">Nabavna cena(din):</label>
             <span className="description">{price}</span>
+            </div>
           </div>
           <div className="profile-modal-buttons-wrapper">
             <button onClick={close}>zatvori</button>

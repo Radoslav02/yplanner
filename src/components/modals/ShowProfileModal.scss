@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     position: fixed;
-    overflow-y: scroll; 
+    overflow-y: scroll;
     inset: 0;
     top: 0;
     background-color: rgba(128, 128, 128, 0.5);
@@ -12,86 +12,89 @@
     align-items: center;
     font-family: "Edu AU VIC WA NT Hand", cursive !important;
     letter-spacing: 1px;
-
+  
     .profile-modal-content {
-        width: 300px;
-        height: 400px;
+      width: 300px;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background-color: #be917e;
+      border: 2px solid #8e604a;
+      border-radius: 20px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+  
+      .profile-modal-heading {
+        height: 30px;
+        background-color: #d9d9d9;
+        width: calc(100% + 40px);
+        position: sticky;
+        top: -20px;
+        margin-top: -20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #8e604a;
+        z-index: 1;
+      }
+  
+      .profile-modal-text-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 20px; 
-        background-color: #BE917E;
-        border: 2px solid #8e604a;
-        border-radius: 20px;
-        padding: 20px;
-        position: relative;
-        overflow: hidden;
-
-       
-        .profile-modal-heading {
-            height: 30px;
-            background-color: #d9d9d9;
-            width: calc(100% + 40px); 
-            position: sticky;
-            top: -20px; 
-            margin-top: -20px; 
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #8e604a;
-            z-index: 1; 
-        }
-
-
-        .profile-modal-text-container {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        gap: 5px;
+        color: #d9d9d9;
+        width: 100%;
+        overflow-y: auto;
+        max-height: calc(100% - 80px);
+  
+        .profile-content-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          gap: 20px;
+  
+          .titles {
+            flex: 0 0 30%;
             color: #d9d9d9;
-            width: 100%;
-            overflow-y: auto;
-            max-height: calc(100% - 80px);
+            text-align: left;
             
-
-            .titles {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                font-weight: bold;
-                color: #d9d9d9;
-            }
-
-            .description {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                color: #ffffff;
-                width: 100%; 
-                word-wrap: break-word; 
-                word-break: break-word; 
-            }
+          }
+  
+          .description {
+            flex: 1;
+            color: #ffffff;
+            word-wrap: break-word;
+            word-break: break-word;
+            text-align: left;
+          }
         }
-
-        .profile-modal-buttons-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 10px; 
-
-            button {
-                background-color: #d9d9d9;
-                color: #8e604a;
-                border-radius: 10px;
-                width: 100px;
-                height: 50px;
-                font-size: 16px;
-                border-color: #8e604a;
-                border-width: 1px;
-                filter: drop-shadow(2px 3px 3px #000000);
-                text-align: center;
-            }
+      }
+  
+      .profile-modal-buttons-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+  
+        button {
+          background-color: #d9d9d9;
+          color: #8e604a;
+          border-radius: 10px;
+          width: 100px;
+          height: 50px;
+          font-size: 16px;
+          border-color: #8e604a;
+          border-width: 1px;
+          filter: drop-shadow(2px 3px 3px #000000);
+          text-align: center;
         }
+      }
     }
-}
+  }
+  
