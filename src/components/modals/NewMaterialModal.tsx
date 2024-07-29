@@ -48,7 +48,7 @@ interface NewMaterialProps {
               <input type="text" onChange={(e) => setColor(e.target.value)} />
             </div>
             <div className="new-form-group">
-              <label className="titles">Nabavna cena(din):</label>
+              <label className="titles">Cena(din):</label>
               <input type="tel" onChange={(e) => setPrice(e.target.value)} />
             </div>
           </form>

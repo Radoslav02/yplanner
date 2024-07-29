@@ -30,7 +30,7 @@ interface ShowMaterialProfileModalProps {
             <span className="description">{color}</span>
             </div>
             <div className="profile-content-wrapper">
-            <label className="titles">Nabavna cena(din):</label>
+            <label className="titles">Cena(din):</label>
             <span className="description">{price}</span>
             </div>
           </div>

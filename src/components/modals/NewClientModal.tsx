@@ -46,7 +46,7 @@ export default function NewClientModal(props: NewClientProps) {
             />
           </div>
           <div className="new-form-group">
-            <label className="titles">Instagram:</label>
+            <label className="titles">Insta:</label>
             <input type="text" onChange={(e) => setInstagram(e.target.value)} />
           </div>
           <div className="new-form-group">

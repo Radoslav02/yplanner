@@ -78,7 +78,7 @@ export default function Customers() {
 
   async function addClient(newClient: Client) {
     const clientExist = clientsData.some(
-      (client) => client.name === newClient.name
+      (client) => client.name.trim() === newClient.name.trim()
     );
     if (clientExist) {
       toast.error("Klijent sa unetim imenom već postoji");

@@ -27,7 +27,7 @@ export default function ProfileModal(props: ShowProfileModalProps) {
             <span className="description">{phone}</span>
           </div>
           <div className="profile-content-wrapper">
-            <span className="titles">Instagram:</span>
+            <span className="titles">Insta:</span>
             <span className="description">{instagram}</span>
           </div>
           <div className="profile-content-wrapper">
