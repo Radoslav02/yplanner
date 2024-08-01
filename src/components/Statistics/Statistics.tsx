@@ -1,11 +1,11 @@
 import "./Statistics.scss";
 import NavBar from "../NavBar/NavBar";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
-import { toast } from "react-toastify";
-import { Appointment } from "../../models/appointment";
+// import { collection, getDocs } from "firebase/firestore";
+import { useState } from "react";
+// import { useAuth } from "../context/AuthContext";
+// import { db } from "../firebase";
+// import { toast } from "react-toastify";
+// import { Appointment } from "../../models/appointment";
 
 export default function Statistics() {
   // const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
