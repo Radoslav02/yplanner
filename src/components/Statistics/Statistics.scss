@@ -1,6 +1,61 @@
-body{
-    margin: 0;
-    padding: 0;
-    background-color: #E8E8E8;
-    font-family: "Edu AU VIC WA NT Hand", cursive !important;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #e8e8e8;
+  font-family: "Edu AU VIC WA NT Hand", cursive !important;
+  box-sizing: border-box;
+}
+
+.statistics-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-top: 20px;
+    padding-bottom: 70px;
+
+  .statistics-title-container {
+    color: #8e604a;
+    font-size: 50px;
+    filter: drop-shadow(1px 1px 1px #000000);
+  }
+
+  .date-inputs-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    
+    .start-date-input-container{
+        width: 120px;
+        height: 35px;
+        padding: 5px;
+        border: 1px solid #8e604a;
+        border-radius: 5px;
+        font-family: inherit;
+        box-sizing: border-box;
+        resize: vertical;
+        background-color: #ffffff;
+    }
+
+    .end-date-input-container{
+        width: 120px;
+        height: 35px;
+        padding: 5px;
+        border: 1px solid #8e604a;
+        border-radius: 5px;
+        font-family: inherit;
+        box-sizing: border-box;
+        resize: vertical;
+        background-color: #ffffff;
+    }
+
+   
+
+  }
+
+  .generate-button{
+    width: 100px;
+    height: 35px;
+  }
 }
