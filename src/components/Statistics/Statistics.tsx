@@ -8,37 +8,37 @@ import { toast } from "react-toastify";
 import { Appointment } from "../../models/appointment";
 
 export default function Statistics() {
-  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
-    [] as Appointment[]
-  );
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  // const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
+  //   [] as Appointment[]
+  // );
+   const [startDate, setStartDate] = useState<string>("");
+   const [endDate, setEndDate] = useState<string>("");
 
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
-  useEffect(() => {
-    if (user && user.uid) {
-      fetchAppointments();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user && user.uid) {
+  //     fetchAppointments();
+  //   }
+  // }, [user]);
 
-  async function fetchAppointments() {
-    try {
-      const appointmentsCollectionRef = collection(
-        db,
-        `users/${user!.uid}/appointments`
-      );
-      const appointmentDocs = await getDocs(appointmentsCollectionRef);
-      const appointmentsData = appointmentDocs.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setAppointmentsData(appointmentsData as Appointment[]);
-    } catch (error) {
-      console.error("Greška pri dobavljanju termina:", error);
-      toast.error("Greška pri dobavljanju termina");
-    }
-  }
+  // async function fetchAppointments() {
+  //   try {
+  //     const appointmentsCollectionRef = collection(
+  //       db,
+  //       `users/${user!.uid}/appointments`
+  //     );
+  //     const appointmentDocs = await getDocs(appointmentsCollectionRef);
+  //     const appointmentsData = appointmentDocs.docs.map((doc) => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setAppointmentsData(appointmentsData as Appointment[]);
+  //   } catch (error) {
+  //     console.error("Greška pri dobavljanju termina:", error);
+  //     toast.error("Greška pri dobavljanju termina");
+  //   }
+  // }
 
   return (
     <div className="statistics-container-wrapper">
