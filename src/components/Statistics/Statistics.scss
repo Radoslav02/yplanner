@@ -7,12 +7,21 @@ body {
 }
 
 .statistics-container-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding-top: 20px;
+  padding-bottom: 70px;
+
+  .generated-content-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
     padding-top: 20px;
     padding-bottom: 70px;
+  }
 
   .statistics-title-container {
     color: #8e604a;
@@ -20,42 +29,67 @@ body {
     filter: drop-shadow(1px 1px 1px #000000);
   }
 
-  .date-inputs-container{
+  .date-inputs-container {
     align-items: center;
     display: flex;
     justify-content: center;
-    gap: 10px;
-    
-    .start-date-input-container{
-        width: 120px;
-        height: 35px;
-        padding: 5px;
-        border: 1px solid #8e604a;
-        border-radius: 5px;
-        font-family: inherit;
-        box-sizing: border-box;
-        resize: vertical;
-        background-color: #ffffff;
+    gap: 15px;
+    width: 350px;
+
+    .start-date-input-container {
+      width: 130px;
+      height: 35px;
+      padding: 5px;
+      border: 1px solid #8e604a;
+      border-radius: 5px;
+      font-family: inherit;
+      box-sizing: border-box;
+      resize: vertical;
+      background-color: #ffffff;
     }
 
-    .end-date-input-container{
-        width: 120px;
-        height: 35px;
-        padding: 5px;
-        border: 1px solid #8e604a;
-        border-radius: 5px;
-        font-family: inherit;
-        box-sizing: border-box;
-        resize: vertical;
-        background-color: #ffffff;
+    .end-date-input-container {
+      width: 130px;
+      height: 35px;
+      padding: 5px;
+      border: 1px solid #8e604a;
+      border-radius: 5px;
+      font-family: inherit;
+      box-sizing: border-box;
+      resize: vertical;
+      background-color: #ffffff;
     }
-
-   
-
   }
 
-  .generate-button{
+  .generate-button {
     width: 100px;
     height: 35px;
   }
+}
+
+table {
+  max-width: 350px;
+}
+
+th,
+td {
+  border-color: #8e604a;
+  text-align: center;
+}
+
+th {
+  background-color: #8e604a;
+  color: #e8e8e8;
+  font-size: 16px !important;
+}
+
+td {
+  background-color: #edcfc0;
+  color: #8e604a;
+  font-size: 16px !important;
+}
+
+.print-button {
+  width: 100px;
+  height: 35px;
 }
