@@ -1,28 +1,24 @@
 import "./Statistics.scss";
 import NavBar from "../NavBar/NavBar";
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import { Appointment } from "../../models/appointment";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import { useReactToPrint } from "react-to-print";
 
 export default function Statistics() {
-  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
-    [] as Appointment[]
-  );
+  const [appointmentsData, setAppointmentsData] = useState<Appointment[]>([]);
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const [generateClicked, setGenerateClicked] = useState<boolean>(false);
-  const [filteredAppointmentsData, setFilteredAppointmentsData] = useState<
-    Appointment[]
-  >([] as Appointment[]);
+  const [filteredAppointmentsData, setFilteredAppointmentsData] = useState<Appointment[]>([]);
   const [totalIncome, setTotalIncome] = useState<number>(0);
   const [income, setIncome] = useState<number>(0);
 
   const { user } = useAuth();
+  const printableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
     if (user && user.uid) {
@@ -32,17 +28,15 @@ export default function Statistics() {
 
   async function fetchAppointments() {
     try {
-      const appointmentsCollectionRef = collection(
-        db,
-        `users/${user!.uid}/appointments`
-      );
+      const appointmentsCollectionRef = collection(db, `users/${user!.uid}/appointments`);
       const appointmentDocs = await getDocs(appointmentsCollectionRef);
-      const appointmentsData = appointmentDocs.docs.map((doc) => ({
+      const appointmentsData = appointmentDocs.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
       }));
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
+      console.error("Greška pri dobavljanju termina:", error);
       toast.error("Greška pri dobavljanju termina");
     }
   }
@@ -53,76 +47,38 @@ export default function Statistics() {
   }
 
   function handleGenerateClicked() {
-    if (!startDate && !endDate) {
-      toast.error("Unesite poćetni i krajnji datum!");
-      return;
-    }
-    if (!startDate) {
-      toast.error("Unesite početni datum!");
-      return;
-    }
-    if (!endDate) {
-      toast.error("Unesite krajnji datum!");
+    if (!startDate || !endDate) {
+      toast.error("Unesite početni i krajnji datum!");
       return;
     }
 
     const start = convertDateFormat(startDate);
     const end = convertDateFormat(endDate);
 
-    const filtered = appointmentsData.filter((appointment) => {
-      return (
-        appointment.date >= start &&
-        appointment.date <= end &&
-        appointment.done === true
-      );
-    });
+    const filtered = appointmentsData.filter(appointment => 
+      appointment.date >= start &&
+      appointment.date <= end &&
+      appointment.done === true
+    );
 
     let sumTotalIncome = 0;
-    filtered.forEach((appointment) => {
+    let sumIncome = 0;
+    filtered.forEach(appointment => {
       const price = appointment.price ? parseInt(appointment.price, 10) : 0;
       sumTotalIncome += price;
-    });
-    setTotalIncome(sumTotalIncome);
-
-    let sumIncome = 0;
-    filtered.forEach((appointment) => {
-      const price = appointment.price ? parseInt(appointment.price, 10) : 0;
       sumIncome += price - 500;
     });
-    setIncome(sumIncome);
 
+    setTotalIncome(sumTotalIncome);
+    setIncome(sumIncome);
     setFilteredAppointmentsData(filtered);
     setGenerateClicked(true);
   }
 
-  async function handlePrintClicked() {
-    const input = document.getElementById("generated-content-container");
-    if (!input) return;
-  
-    const canvas = await html2canvas(input, { scale: 1 }); // Use scale 1 to avoid upscaling
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-  
-    const imgWidth = 150; // Adjusted width
-    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const xOffset = (pageWidth - imgWidth) / 2; // Center horizontally
-  
-    pdf.addImage(imgData, "PNG", xOffset, 10, imgWidth, imgHeight); // Centered horizontally, 10 units margin from top
-    let heightLeft = imgHeight - (pdf.internal.pageSize.getHeight() - 10);
-  
-    while (heightLeft > 0) {
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", xOffset, -heightLeft, imgWidth, imgHeight); // Continue adding the image with adjusted position
-      heightLeft -= pdf.internal.pageSize.getHeight();
-    }
-  
-    pdf.save("report.pdf");
-  }
-  
-  
-  
-  
+  const handlePrint = useReactToPrint({
+    content: () => printableRef.current as HTMLTableElement,
+    documentTitle: `Izveštaj ${startDate} - ${endDate}`,
+  });
 
   return (
     <div className="statistics-container-wrapper">
@@ -134,14 +90,14 @@ export default function Statistics() {
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-        ></input>
+        />
         <span>Do:</span>
         <input
           className="end-date-input-container"
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-        ></input>
+        />
       </div>
 
       <div className="generate-button-container">
@@ -150,8 +106,8 @@ export default function Statistics() {
         </button>
       </div>
       {generateClicked && (
-        <div id="generated-content-container" className="generated-content-container">
-          <table>
+        <div className="generated-content-container">
+          <table ref={printableRef}>
             <thead>
               <tr>
                 <th>Klijent</th>
@@ -160,7 +116,7 @@ export default function Statistics() {
               </tr>
             </thead>
             <tbody>
-              {filteredAppointmentsData.map((appointment) => (
+              {filteredAppointmentsData.map(appointment => (
                 <tr key={appointment.id}>
                   <td>{appointment.name}</td>
                   <td>{appointment.date}</td>
@@ -169,8 +125,8 @@ export default function Statistics() {
               ))}
               <tr>
                 <th>Ukupno klijenata:</th>
-                <th>Ukupna zarada: </th>
-                <th>Zarada sa troskovima: </th>
+                <th>Ukupna zarada:</th>
+                <th>Zarada sa troškovima:</th>
               </tr>
               <tr>
                 <td>{filteredAppointmentsData.length}</td>
@@ -183,7 +139,7 @@ export default function Statistics() {
       )}
       {generateClicked && (
         <div className="print-button-container">
-          <button onClick={handlePrintClicked} className="print-button">
+          <button className="print-button" onClick={handlePrint}>
             Štampaj
           </button>
         </div>
