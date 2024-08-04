@@ -6,6 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import { Appointment } from "../../models/appointment";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function Statistics() {
   const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
@@ -41,7 +43,6 @@ export default function Statistics() {
       }));
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
-      console.error("Greška pri dobavljanju termina:", error);
       toast.error("Greška pri dobavljanju termina");
     }
   }
@@ -58,7 +59,6 @@ export default function Statistics() {
     }
     if (!startDate) {
       toast.error("Unesite početni datum!");
-
       return;
     }
     if (!endDate) {
@@ -66,17 +66,13 @@ export default function Statistics() {
       return;
     }
 
-    console.log(endDate);
-
     const start = convertDateFormat(startDate);
     const end = convertDateFormat(endDate);
 
-    console.log(end);
-
     const filtered = appointmentsData.filter((appointment) => {
       return (
-        appointment.date > start &&
-        appointment.date < end &&
+        appointment.date >= start &&
+        appointment.date <= end &&
         appointment.done === true
       );
     });
@@ -98,6 +94,35 @@ export default function Statistics() {
     setFilteredAppointmentsData(filtered);
     setGenerateClicked(true);
   }
+
+  async function handlePrintClicked() {
+    const input = document.getElementById("generated-content-container");
+    if (!input) return;
+  
+    const canvas = await html2canvas(input, { scale: 1 }); // Use scale 1 to avoid upscaling
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+  
+    const imgWidth = 150; // Adjusted width
+    const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const xOffset = (pageWidth - imgWidth) / 2; // Center horizontally
+  
+    pdf.addImage(imgData, "PNG", xOffset, 10, imgWidth, imgHeight); // Centered horizontally, 10 units margin from top
+    let heightLeft = imgHeight - (pdf.internal.pageSize.getHeight() - 10);
+  
+    while (heightLeft > 0) {
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", xOffset, -heightLeft, imgWidth, imgHeight); // Continue adding the image with adjusted position
+      heightLeft -= pdf.internal.pageSize.getHeight();
+    }
+  
+    pdf.save("report.pdf");
+  }
+  
+  
+  
+  
 
   return (
     <div className="statistics-container-wrapper">
@@ -125,7 +150,7 @@ export default function Statistics() {
         </button>
       </div>
       {generateClicked && (
-        <div className="generated-content-container">
+        <div id="generated-content-container" className="generated-content-container">
           <table>
             <thead>
               <tr>
@@ -154,10 +179,13 @@ export default function Statistics() {
               </tr>
             </tbody>
           </table>
-
-          <div className="print-button-container">
-            <button className="print-button">Štampaj</button>
-          </div>
+        </div>
+      )}
+      {generateClicked && (
+        <div className="print-button-container">
+          <button onClick={handlePrintClicked} className="print-button">
+            Štampaj
+          </button>
         </div>
       )}
       <NavBar />
