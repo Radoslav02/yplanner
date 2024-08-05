@@ -48,10 +48,15 @@ export default function Statistics() {
 
   function getCurrentMonthDateRange() {
     const now = new Date();
-    const start = new Date(now.getFullYear(), now.getMonth() , 2);
-    console.log(now.getMonth())
-    const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-    const format = (date: Date) => date.toISOString().split("T")[0];
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    
+    const format = (date: Date) => {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
+    };
 
     return {
       start: format(start),
@@ -65,8 +70,8 @@ export default function Statistics() {
       return;
     }
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    const start = new Date(startDate.split('.').reverse().join('-'));
+    const end = new Date(endDate.split('.').reverse().join('-'));
 
     const filtered = appointmentsData.filter(appointment => {
       const appointmentDate = new Date(appointment.date.split(".").reverse().join("-"));
@@ -100,15 +105,15 @@ export default function Statistics() {
         <input
           className="start-date-input-container"
           type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
+          value={startDate.split('.').reverse().join('-')}
+          onChange={(e) => setStartDate(e.target.value.split('-').reverse().join('.'))}
         />
         <span>Do:</span>
         <input
           className="end-date-input-container"
           type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
+          value={endDate.split('.').reverse().join('-')}
+          onChange={(e) => setEndDate(e.target.value.split('-').reverse().join('.'))}
         />
       </div>
 

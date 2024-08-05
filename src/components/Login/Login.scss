@@ -19,7 +19,7 @@ input {
   width: 80%;
   height: 53px;
   margin: 0;
-  font-size: 16px;
+  font-size: 16px !important;
   background-color: #C9C0ED;
   border-color: #6A2E86;
   border-width: 1px;
@@ -65,7 +65,7 @@ button {
   height: 50px;
   margin: 0;
   background-color: #A67EBE;
-  font-size: 16px;
+  font-size: 16px !important;
   border-color: #6A2E86;
   border-width: 1px;
   filter: drop-shadow(2px 3px 3px #000000);

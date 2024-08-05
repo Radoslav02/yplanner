@@ -22,6 +22,7 @@ import NewClientModal from "../modals/NewClientModal";
 import EditClientModal from "../modals/EditClientModal";
 import SearchIcon from "@mui/icons-material/Search";
 import Loading from "../Loading/Loading";
+import { BarLoader, MoonLoader } from "react-spinners";
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([]);
@@ -47,7 +48,6 @@ export default function Customers() {
       fetchClients();
     }
   }, [user]);
-
 
   async function fetchClients() {
     setIsLoading(true);
@@ -255,7 +255,7 @@ export default function Customers() {
       </div>
 
       {isLoading ? (
-        <Loading />
+        <MoonLoader color="#6c05ff" cssOverride={{}} />
       ) : (
         filteredClientsData.length > 0 &&
         filteredClientsData.map((client: Client) => (

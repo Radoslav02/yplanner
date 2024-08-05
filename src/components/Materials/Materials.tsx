@@ -22,6 +22,7 @@ import NewMaterialModal from "../modals/NewMaterialModal";
 import EditMaterialModal from "../modals/EditMaterialModal";
 import SearchIcon from "@mui/icons-material/Search";
 import Loading from "../Loading/Loading";
+import { BarLoader, MoonLoader } from "react-spinners";
 
 export default function Customers() {
   const [materialsData, setMaterialsData] = useState<Material[]>([]);
@@ -122,9 +123,9 @@ export default function Customers() {
       setMaterialsData(
         materialsData.filter((material: Material) => material.id !== materialId)
       );
-      
+
       fetchMaterials();
-      setSearchedMaterial("")
+      setSearchedMaterial("");
       toast.success("Materijal uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
@@ -153,7 +154,7 @@ export default function Customers() {
       );
 
       fetchMaterials();
-      setSearchedMaterial("")
+      setSearchedMaterial("");
       toast.success("Materijal uspešno izmenjen");
       closeEditMaterialModal();
     } catch (error) {
@@ -275,7 +276,7 @@ export default function Customers() {
       </div>
 
       {isLoading ? (
-        <Loading />
+        <MoonLoader color="#6c05ff" cssOverride={{}} />
       ) : (
         filteredMaterialsData.length > 0 &&
         filteredMaterialsData.map((material: Material) => (
