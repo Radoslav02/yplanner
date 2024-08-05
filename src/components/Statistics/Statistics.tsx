@@ -40,25 +40,19 @@ export default function Statistics() {
     }
   }
 
-  function convertDateFormat(date: string): string {
-    const [year, month, day] = date.split("-");
-    return `${day}.${month}.${year}`;
-  }
-
   function handleGenerateClicked() {
     if (!startDate || !endDate) {
       toast.error("Unesite početni i krajnji datum!");
       return;
     }
 
-    const start = convertDateFormat(startDate);
-    const end = convertDateFormat(endDate);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-    const filtered = appointmentsData.filter(appointment => 
-      appointment.date >= start &&
-      appointment.date <= end &&
-      appointment.done === true
-    );
+    const filtered = appointmentsData.filter(appointment => {
+      const appointmentDate = new Date(appointment.date.split(".").reverse().join("-"));
+      return appointmentDate >= start && appointmentDate <= end && appointment.done === true;
+    });
 
     let sumTotalIncome = 0;
     let sumIncome = 0;
