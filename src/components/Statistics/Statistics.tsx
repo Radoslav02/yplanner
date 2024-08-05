@@ -26,6 +26,12 @@ export default function Statistics() {
     }
   }, [user]);
 
+  useEffect(() => {
+    const { start, end } = getCurrentMonthDateRange();
+    setStartDate(start);
+    setEndDate(end);
+  }, []);
+
   async function fetchAppointments() {
     try {
       const appointmentsCollectionRef = collection(db, `users/${user!.uid}/appointments`);
@@ -38,6 +44,19 @@ export default function Statistics() {
     } catch (error) {
       toast.error("Greška pri dobavljanju termina");
     }
+  }
+
+  function getCurrentMonthDateRange() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth() , 2);
+    console.log(now.getMonth())
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+    const format = (date: Date) => date.toISOString().split("T")[0];
+
+    return {
+      start: format(start),
+      end: format(end),
+    };
   }
 
   function handleGenerateClicked() {
