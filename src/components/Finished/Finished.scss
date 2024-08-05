@@ -8,7 +8,7 @@
   padding-bottom: 70px;
 
   .finished-title {
-    color: #6A2E86;
+    color: #6a2e86;
     font-size: 50px !important;
     filter: drop-shadow(1px 1px 1px #000000);
   }
@@ -26,18 +26,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #C9C0ED;
-      border: 1px solid #6A2E86;
+      background-color: #f9f9f9;
+      border: 1px solid #6a2e86;
       border-radius: 10px 0 0 10px;
-      color: #6A2E86;
+      color: #6a2e86;
       box-sizing: border-box;
       z-index: 1;
     }
 
     .search-input {
       @extend .finished-container;
-      color: #6A2E86;
-      border: 1px solid #6A2E86;
+      color: #6a2e86;
+      border: 1px solid #6a2e86;
       border-radius: 10px;
       width: 300px;
       height: 35px;
@@ -50,14 +50,14 @@
       box-sizing: border-box;
 
       &::placeholder {
-        color: #6A2E86;
+        color: #6a2e86;
         opacity: 1;
       }
     }
   }
 
   .appointment-container {
-    background-color: #C9C0ED;
+    background-color: #c9c0ed;
     width: 300px;
     min-height: 50px;
     font-size: 16px !important;
@@ -65,21 +65,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #6A2E86;
+    border: 1px solid #6a2e86;
     filter: drop-shadow(2px 3px 3px #000000);
     padding: 10px 20px;
     flex-direction: row;
     gap: 15px;
 
     .appointment-info-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex: 1;
-        color: #6A2E86 !important;
-        font-weight: bold;
-        overflow-y: auto;
-    
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+      color: #6a2e86 !important;
+      font-weight: bold;
+      overflow-y: auto;
+
       .appointment-wrapper {
         width: 100%;
         display: flex;
@@ -89,14 +89,12 @@
           color: white;
         }
 
-        span{
+        span {
           padding-left: 10px;
           padding-right: 10px;
-          // white-space: nowrap;
           width: fit-content !important;
         }
       }
-
-      }
+    }
   }
 }
