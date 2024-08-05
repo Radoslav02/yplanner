@@ -4,7 +4,7 @@ import { Appointment } from "../../models/appointment";
 import NavBar from "../NavBar/NavBar";
 import "./Finished.scss";
 import { useAuth } from "../context/AuthContext";
-import { collection, getDocs, query, orderBy, startAfter, limit } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, startAfter, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import SearchIcon from "@mui/icons-material/Search";
@@ -20,10 +20,11 @@ export default function Finished() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user && user.uid) {
+    if (user && user.uid && !appointmentsData.length) {
       fetchAppointments();
     }
   }, [user]);
+
 
   const fetchAppointments = useCallback(async () => {
     if (!user) return;
@@ -38,20 +39,20 @@ export default function Finished() {
       // Create a query with ordering and pagination
       const appointmentsQuery = query(
         appointmentsCollectionRef,
+        where("done", "==", true),
         orderBy("date"),  // Assuming date is a field in the appointment
         orderBy("hour"),  // Assuming hour is a field in the appointment
         startAfter(lastVisible || 0), // Start after the last visible document
-        limit(10) // Fetch 10 documents per page
+        // limit(10) // Fetch 10 documents per page
       );
 
       const appointmentDocs = await getDocs(appointmentsQuery);
-
+      console.log(appointmentDocs);
       const newAppointments = appointmentDocs.docs
         .map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }))
-        .filter((appointment: any) => appointment.done); // Filter only done appointments
 
       const uniqueAppointments = newAppointments.filter(
         (appointment: any) => !appointmentIds.current.has(appointment.id)
@@ -71,7 +72,7 @@ export default function Finished() {
     } finally {
       setLoading(false);
     }
-  }, [user, lastVisible]);
+  }, [user, lastVisible,]);
 
   // Infinite scroll event listener
   const handleScroll = useCallback(() => {
@@ -105,6 +106,7 @@ export default function Finished() {
       appointment.material?.toLowerCase().includes(searchQuery) ||
       appointment.price.toString().includes(searchQuery) ||
       appointment.note?.toString().includes(searchQuery)
+
     );
   });
 

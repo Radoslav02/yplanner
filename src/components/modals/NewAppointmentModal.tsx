@@ -47,7 +47,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
 
     function formatDateToLocalInput(date: string) {
         const split = [...date.split(".")];
-        return `${split[2]}-${split[1]}-${split[0]}T08:00`;
+        return `${split[2]}-${split[1]}-${split[0].length === 1 ? '0' + split[0] : split[0]}T08:00`;
     }
 
     function getHoursFromDate(date: string) {

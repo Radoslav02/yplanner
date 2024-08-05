@@ -8,9 +8,18 @@ interface CalendarModalProps {
 export default function CalendarModal(props: CalendarModalProps) {
     const { setRelativeDay, setCalendarClicked } = props;
 
+    // Format today's date to YYYY-MM-DD for compatibility with <input type="date">
+    const formatDate = (date: Date): string => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     function handleChange(date: string) {
-        setRelativeDay(new Date(date))
-        setCalendarClicked(false)
+        // Ensure the date string is in a supported format
+        setRelativeDay(new Date(date));
+        setCalendarClicked(false);
     }
 
     return (
@@ -20,6 +29,7 @@ export default function CalendarModal(props: CalendarModalProps) {
                 <div>
                     <input
                         type="date"
+                        defaultValue={formatDate(new Date())} // Use formatted date string
                         onChange={(e) => handleChange(e.target.value)}
                     />
                 </div>

@@ -47,11 +47,17 @@ export default function Home() {
     if (user && user.uid) {
       fetchAppointments();
     }
+    console.log(user);
+
   }, [user]);
 
   useEffect(() => {
     setWeekDays(calcWeekDays());
   }, [relativeDay]);
+
+  useEffect(() => {
+    console.table(appointmentsData)
+  }, [appointmentsData])
 
   async function fetchAppointments() {
     try {
@@ -97,8 +103,10 @@ export default function Home() {
         db,
         `users/${user!.uid}/appointments`
       );
-      await addDoc(appointmentCollectionRef, newAppointment);
+      const response = await addDoc(appointmentCollectionRef, newAppointment);
+      console.log(response);
       toast.success("Termin uspešno dodat");
+      fetchAppointments()
     } catch (error) {
       console.error("Error adding termin:", error);
       toast.error("Greška pri dodavanju termina");
