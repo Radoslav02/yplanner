@@ -21,8 +21,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NewMaterialModal from "../modals/NewMaterialModal";
 import EditMaterialModal from "../modals/EditMaterialModal";
 import SearchIcon from "@mui/icons-material/Search";
-import Loading from "../Loading/Loading";
-import { BarLoader, MoonLoader } from "react-spinners";
 
 export default function Customers() {
   const [materialsData, setMaterialsData] = useState<Material[]>([]);

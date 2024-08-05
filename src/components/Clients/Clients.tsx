@@ -21,8 +21,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import NewClientModal from "../modals/NewClientModal";
 import EditClientModal from "../modals/EditClientModal";
 import SearchIcon from "@mui/icons-material/Search";
-import Loading from "../Loading/Loading";
-import { BarLoader, MoonLoader } from "react-spinners";
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([]);
