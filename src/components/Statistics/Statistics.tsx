@@ -36,7 +36,6 @@ export default function Statistics() {
       }));
       setAppointmentsData(appointmentsData as Appointment[]);
     } catch (error) {
-      console.error("Greška pri dobavljanju termina:", error);
       toast.error("Greška pri dobavljanju termina");
     }
   }

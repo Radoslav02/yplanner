@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #e8e8e8;
+  background-color: #FFEDFE;
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   box-sizing: border-box;
 }
@@ -26,7 +26,7 @@ body {
   }
 
   .statistics-title-container {
-    color: #8e604a;
+    color: #6A2E86;
     font-size: 50px;
     filter: drop-shadow(1px 1px 1px #000000);
     text-align: center;
@@ -44,7 +44,7 @@ body {
       width: 130px;
       height: 35px;
       padding: 5px;
-      border: 1px solid #8e604a;
+      border: 1px solid #6A2E86;
       border-radius: 5px;
       font-family: inherit;
       box-sizing: border-box;
@@ -70,20 +70,20 @@ table {
 
 th,
 td {
-  border: 1px solid #8e604a;
+  border: 1px solid #6A2E86;
   text-align: center;
   padding: 8px;
 }
 
 th {
-  background-color: #8e604a;
-  color: #e8e8e8;
+  background-color: #6A2E86;
+  color: #FFEDFE;
   font-size: 16px !important;
 }
 
 td {
-  background-color: #edcfc0;
-  color: #8e604a;
+  background-color: #C9C0ED;
+  color: #6A2E86;
   font-size: 16px !important;
 }
 

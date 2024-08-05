@@ -18,15 +18,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #be917e;
-    border: 2px solid #8e604a;
+    background-color: #A67EBE;
+    border: 2px solid #6A2E86;
     border-radius: 20px;
     padding: 20px;
     position: relative;
 
     .new-modal-heading {
       height: 30px;
-      background-color: #d9d9d9;
+      background-color: #C9C0ED;
       width: calc(100% + 40px);
       position: sticky;
       top: -20px;
@@ -36,7 +36,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #8e604a;
+      color: #6A2E86;
       z-index: 1;
     }
 
@@ -47,13 +47,13 @@
     }
 
     button {
-      background-color: #d9d9d9;
-      color: #8e604a;
+      background-color: #C9C0ED;
+      color: #6A2E86;
       border-radius: 10px;
       width: 100px;
       height: 50px;
       font-size: 16px;
-      border-color: #8e604a;
+      border-color: #6A2E86;
       border-width: 1px;
       filter: drop-shadow(2px 3px 3px #000000);
       text-align: center;

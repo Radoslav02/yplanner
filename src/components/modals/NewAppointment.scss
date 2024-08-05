@@ -18,14 +18,14 @@
 
   .modal-content {
     min-width: 80vw;
-    background-color: #be917e;
+    background-color: #A67EBE;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    border: 2px solid #8e604a;
+    border: 2px solid #6A2E86;
     padding-top: 40px;
     gap: 10px;
     padding-bottom: 10px;
@@ -35,7 +35,7 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 5px;
-      color: #d9d9d9;
+      color: #C9C0ED;
       padding-bottom: 20px;
     }
 
@@ -53,7 +53,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #d9d9d9;
+        color: #C9C0ED;
         input,
         select,
         textarea,
@@ -61,7 +61,7 @@
           height: 30px !important;
           width: 200px !important;
           border-radius: 5px !important;
-          border: 2px solid #d9d9d9 !important;
+          border: 2px solid #C9C0ED !important;
           padding: 0;
           text-align: center;
           background-color: white;
@@ -75,14 +75,14 @@
         }
 
         #status {
-          accent-color: #d9d9d9 !important;
+          accent-color: #C9C0ED !important;
         }
       }
     }
 
     .modal-heading {
       height: 30px;
-      background-color: #d9d9d9;
+      background-color: #C9C0ED;
       width: 100%;
       position: absolute;
       top: 0;
@@ -91,13 +91,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #8e604a;
+      color: #6A2E86;
     }
 
     p {
       width: 70%;
       text-align: center;
-      color: #d9d9d9;
+      color: #C9C0ED;
       margin: 0;
       padding: 0;
     }
@@ -110,14 +110,14 @@
       align-items: center;
 
       button {
-        background-color: #d9d9d9;
-        color: #8e604a;
+        background-color: #C9C0ED;
+        color: #6A2E86;
         border-radius: 10px;
         width: 100%;
         height: 50px;
         margin: 0;
         font-size: 16px;
-        border-color: #8e604a;
+        border-color: #6A2E86;
         border-width: 1px;
         filter: drop-shadow(2px 3px 3px #000000);
         text-align: center;
