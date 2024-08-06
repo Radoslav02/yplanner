@@ -22,13 +22,13 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
 
     const { user } = useAuth();
 
-    const [date, setDate] = useState<string>(formatDateTime(data));
+    const [date, setDate] = useState<string>(formatDateTime(data.date));
     const [client, setClient] = useState<string>(data.name);
     const [service, setService] = useState<string>(data.service);
-    const [material, setMaterial] = useState<string>(data.material ?? '')
+    const [material, setMaterial] = useState<string>(data.material ?? "");
     const [note, setNote] = useState<string>(data.note);
     const [done, setDone] = useState<boolean>(data.done);
-    const [price, setPrice] = useState<string>(data.price ?? '0')
+    const [price, setPrice] = useState<string>(data.price ?? "0");
     const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
     const [services, setServices] = useState<Service[]>([] as Service[]);
     const [materials, setMaterials] = useState<Material[]>([] as Material[]);
@@ -38,7 +38,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
     useEffect(() => {
         fetchClients();
         fetchServices();
-        fetchMaterials()
+        fetchMaterials();
     }, []);
 
     const handleSave = () => {
@@ -57,27 +57,27 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
     };
 
     function getHoursFromDate(date: string) {
-        const index = date.indexOf('T')
+        const index = date.indexOf("T");
         if (index > 0) {
-            return date.slice(index + 1)
-        } else return '08:00'
+            return date.slice(index + 1);
+        } else return "08:00";
     }
 
     function cutTimeFromDate(date: string) {
-        const index = date.indexOf('T')
+        const index = date.indexOf("T");
         if (index > 0) {
-            const cutedDate = date.slice(0, index)
-            const array = cutedDate.split('-')
-            return `${array[2]}.${array[1]}.${array[0]}`
+            const cutedDate = date.slice(0, index);
+            const array = cutedDate.split("-");
+            return `${array[2]}.${array[1]}.${array[0]}`;
         } else {
-            return date
+            return date;
         }
     }
 
-    function formatDateTime(data: Appointment) {
-        const date = data.date;
+    function formatDateTime(date: string) {
         const formatedDate = date.split(".");
-        return `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}T${data.hour}`;
+        return `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0].length === 1 ? "0" + formatedDate[0] : formatedDate[0]
+            }T${data.hour}`;
     }
 
     async function fetchClients() {
@@ -112,7 +112,10 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
 
     async function fetchMaterials() {
         try {
-            const materialCollectionRef = collection(db, `users/${user!.uid}/materials`);
+            const materialCollectionRef = collection(
+                db,
+                `users/${user!.uid}/materials`
+            );
             const materialsDocs = await getDocs(materialCollectionRef);
             const materialsData = materialsDocs.docs.map((doc) => ({
                 id: doc.id,
@@ -143,7 +146,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                         <label htmlFor="client">Klijent</label>
                         <select
                             id="client"
-                            defaultValue={data.name}
+                            value={client}
                             onChange={(e) => {
                                 setClient(e.target.value);
                             }}
@@ -165,7 +168,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                         <label htmlFor="service">Usluga</label>
                         <select
                             id="service"
-                            defaultValue={data.service}
+                            value={service}
                             onChange={(e) => setService(e.target.value)}
                             required
                         >
@@ -185,7 +188,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                         <label htmlFor="date">Beleška</label>
                         <textarea
                             rows={1}
-                            defaultValue={data.note}
+                            value={note}
                             onChange={(e) => setNote(e.target.value)}
                         />
                     </div>
@@ -196,42 +199,46 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
                                 type="checkbox"
                                 id="status"
                                 name="status"
-                                defaultChecked={data.done}
+                                defaultChecked={done}
                                 onChange={() => setDone((oldState: boolean) => !oldState)}
                             />
                         </div>
                     </div>
-                    {done && <div className="form-group">
-                        <label htmlFor="service">Cena</label>
-                        <div>
-                            <input
-                                type="number"
-                                id="price"
-                                defaultValue={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
+                    {done && (
+                        <div className="form-group">
+                            <label htmlFor="service">Cena</label>
+                            <div>
+                                <input
+                                    type="number"
+                                    id="price"
+                                    defaultValue={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                />
+                            </div>
                         </div>
-                    </div>}
-                    {done && <div className="form-group">
-                        <label htmlFor="service">Materijal</label>
-                        <select
-                            id="service"
-                            defaultValue={data.material}
-                            onChange={(e) => setMaterial(e.target.value)}
-                            required
-                        >
-                            <option value="" disabled>
-                                izaberi materijal
-                            </option>
-                            {materials
-                                .map((material: Material) => material.type)
-                                .map((material: string) => (
-                                    <option key={material} value={material}>
-                                        {material}
-                                    </option>
-                                ))}
-                        </select>
-                    </div>}
+                    )}
+                    {done && (
+                        <div className="form-group">
+                            <label htmlFor="service">Materijal</label>
+                            <select
+                                id="service"
+                                defaultValue={data.material}
+                                onChange={(e) => setMaterial(e.target.value)}
+                                required
+                            >
+                                <option value="" disabled>
+                                    izaberi materijal
+                                </option>
+                                {materials
+                                    .map((material: Material) => material.type)
+                                    .map((material: string) => (
+                                        <option key={material} value={material}>
+                                            {material}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                    )}
                 </form>
                 <div className="modal-buttons-wrapper">
                     <button onClick={handleSave}>sačuvaj</button>

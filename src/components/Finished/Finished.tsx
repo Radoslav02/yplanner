@@ -47,7 +47,6 @@ export default function Finished() {
       );
 
       const appointmentDocs = await getDocs(appointmentsQuery);
-      console.log(appointmentDocs);
       const newAppointments = appointmentDocs.docs
         .map((doc) => ({
           id: doc.id,

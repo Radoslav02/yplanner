@@ -47,17 +47,11 @@ export default function Home() {
     if (user && user.uid) {
       fetchAppointments();
     }
-    console.log(user);
-
   }, [user]);
 
   useEffect(() => {
     setWeekDays(calcWeekDays());
   }, [relativeDay]);
-
-  useEffect(() => {
-    console.table(appointmentsData)
-  }, [appointmentsData])
 
   async function fetchAppointments() {
     try {
@@ -66,11 +60,11 @@ export default function Home() {
         `users/${user!.uid}/appointments`
       );
       const appointmentDocs = await getDocs(appointmentsCollectionRef);
-      const appointmentsData = appointmentDocs.docs.map((doc) => ({
+      const appointments = appointmentDocs.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setAppointmentsData(appointmentsData as Appointment[]);
+      setAppointmentsData(appointments as Appointment[]);
     } catch (error) {
       console.error("Error fetching appointments:", error);
       toast.error("Greška pri dobavljanju termina");
@@ -103,8 +97,7 @@ export default function Home() {
         db,
         `users/${user!.uid}/appointments`
       );
-      const response = await addDoc(appointmentCollectionRef, newAppointment);
-      console.log(response);
+      await addDoc(appointmentCollectionRef, newAppointment);
       toast.success("Termin uspešno dodat");
       fetchAppointments()
     } catch (error) {
@@ -121,6 +114,7 @@ export default function Home() {
       );
       await updateDoc(appointmentDocRef, newClient as { [key: string]: any });
       toast.success("Termin uspešno izmenjen");
+      fetchAppointments()
     } catch (error) {
       console.error("Error adding termin:", error);
       toast.error("Greška pri izmeni termina");
@@ -137,14 +131,16 @@ export default function Home() {
     const week = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(monday);
-      date.setDate(monday.getDate() + i);
+      date.setDate(monday.getDate() + i)
       week.push(truncateDateString(date));
     }
+    console.table(week);
     return week;
   }
 
   function filterAppointmentsByDate(weekDate: string) {
-    const day = weekDate.slice(weekDate.indexOf("-") + 2);
+    let day = weekDate.slice(weekDate.indexOf("-") + 2);
+    day = day.length === 1 ? '0' + day : day
     if (!appointmentsData) return [];
     const data = appointmentsData;
     const matched = [] as Appointment[];
@@ -219,18 +215,17 @@ export default function Home() {
       ></div>
       <div className="appointments-wrapper">
         {weekDays?.length &&
-          weekDays.map((day: string) => (
-            <div key={day}>
-              <AppointmentCard
-                day={day}
-                data={filterAppointmentsByDate(day)}
-                setDeleteClicked={setDeleteClicked}
-                setSelectedAppointment={setSelectedAppointment}
-                setAppointmentClicked={setAddAppointmentClick}
-                setDefaultDate={setDefaultDate}
-                setEditAppointmentClicked={setEditAppointmentClicked}
-              />
-            </div>
+          weekDays.map((day: string, index: number) => (
+            <AppointmentCard
+              key={index}
+              day={day}
+              data={filterAppointmentsByDate(day)}
+              setDeleteClicked={setDeleteClicked}
+              setSelectedAppointment={setSelectedAppointment}
+              setAppointmentClicked={setAddAppointmentClick}
+              setDefaultDate={setDefaultDate}
+              setEditAppointmentClicked={setEditAppointmentClicked}
+            />
           ))}
       </div>
       <button

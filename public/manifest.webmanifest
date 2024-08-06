@@ -1,6 +1,6 @@
 {
   "name": "JPlanner",
-  "short_name": "JPN",
+  "short_name": "JPlanner",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#C9C0ED",
