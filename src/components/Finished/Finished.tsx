@@ -8,6 +8,7 @@ import { collection, getDocs, query, orderBy, startAfter, where } from "firebase
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import SearchIcon from "@mui/icons-material/Search";
+import { MoonLoader } from "react-spinners";
 
 export default function Finished() {
   const [appointmentsData, setAppointmentsData] = useState<any[]>([]);
@@ -164,7 +165,7 @@ export default function Finished() {
         </div>
       ))}
       {!sortedData.length && <div className="end-of-results">Nema termina po ovom kriterijumu pretrage</div>}
-      {loading && <div className="loading">Učitavanje...</div>}
+      {loading && <MoonLoader color="#6c05ff" cssOverride={{}} /> }
       {!hasMore && <div className="end-of-results">Nema više termina</div>}
       <NavBar />
     </div>
