@@ -9,8 +9,8 @@ import { parseMessage } from "../../services/firestoreMessage";
 import logo from '../../assets/JPlanner.png'
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jevriceva@gmail.com");
+  const [password, setPassword] = useState("cipelic1986");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
