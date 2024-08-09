@@ -17,7 +17,7 @@
   box-sizing: border-box;
 
   .modal-content {
-    min-width: 80vw;
+    min-width: 85vw;
     background-color: #A67EBE;
     border-radius: 20px;
     display: flex;
@@ -54,6 +54,7 @@
         justify-content: space-between;
         align-items: center;
         color: #C9C0ED;
+
         input,
         select,
         textarea,
@@ -124,4 +125,89 @@
       }
     }
   }
+
+  .multiple-select {
+    width: 100%;
+    max-width: 204px;
+
+    .react-select__control {
+      height: 30px;
+      border-radius: 5px;
+      border: 2px solid #C9C0ED;
+      box-shadow: none;
+      background-color: white;
+      font-family: "Edu AU VIC WA NT Hand", cursive !important;
+      padding-right: 30px;
+    }
+
+    .react-select__menu {
+      width: 100%;
+      overflow: auto;
+      min-height: 200px;
+      border: 2px solid #C9C0ED;
+      border-radius: 5px;
+      box-shadow: none;
+      background-color: white;
+    }
+
+    .react-select__option {
+      padding: 10px;
+      font-size: 14px;
+      color: #6A2E86;
+    }
+
+    .react-select__option--is-selected {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .react-select__option--is-focused {
+      background-color: #e0e0e0;
+      color: #000;
+    }
+
+    .react-select__input {
+      width: 120px;
+      input {
+        height: 30px;
+        border-radius: 5px;
+        border: 2px solid #C9C0ED;
+        padding: 0 8px;
+        background-color: white;
+      }
+    }
+
+    .react-select__clear-indicator {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6A2E86;
+    }
+  }
+
+  .multiple-select {
+    width: 100%;
+    max-width: 204px;
+  
+    
+  }
+  
 }
+
+
+.select__placeholder{
+  padding-left: 10px !important;
+  
+}
+
+.select__single-value{
+  padding-left: 15px !important;
+}
+
+.select__value-container{
+  padding-left: 10px !important;
+}
+
+
+
