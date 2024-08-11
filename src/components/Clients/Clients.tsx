@@ -68,7 +68,7 @@ export default function Customers() {
       setClientsData(sortedClients);
       setFilteredClientsData(sortedClients);
     } catch (error) {
-      console.error("Error fetching clients", error);
+   
       toast.error("Greška prilikom dobavljanja klijenata iz baze");
     } finally {
       setIsLoading(false);
@@ -97,7 +97,7 @@ export default function Customers() {
       toast.success("Klijent uspešno dodat");
       closeAddClientModal();
     } catch (error) {
-      console.error("Error adding client:", error);
+     
       toast.error("Greška pri dodavanju klijenta");
     }
   }
@@ -115,7 +115,7 @@ export default function Customers() {
       toast.success("Klijent uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
-      console.error("Error deleting client:", error);
+      
       toast.error("Greška pri brisanju klijenta");
     }
   }
@@ -136,7 +136,7 @@ export default function Customers() {
       toast.success("Klijent uspešno izmenjen");
       closeEditClientModal();
     } catch (error) {
-      console.error("Error editing client:", error);
+    
       toast.error("Greška pri izmeni klijenta");
     }
   }

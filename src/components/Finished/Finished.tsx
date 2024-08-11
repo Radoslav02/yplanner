@@ -67,7 +67,7 @@ export default function Finished() {
       setLastVisible(appointmentDocs.docs[appointmentDocs.docs.length - 1]); // Update the last visible document
       setHasMore(!appointmentDocs.empty); // Check if there are more documents
     } catch (error) {
-      console.error("Error fetching appointments:", error);
+     
       toast.error("Greška pri dobavljanju termina");
     } finally {
       setLoading(false);

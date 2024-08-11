@@ -137,7 +137,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
       }));
       setClientsData(clientsData as Client[]);
     } catch (error) {
-      console.error("Error fetching clients");
+     
       toast.error("Error fetching clients");
     }
   }
@@ -158,7 +158,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
 
       setServices(serviceOptions);
     } catch (error) {
-      console.error("Error fetching services");
+     
       toast.error("Error fetching services");
     }
   }
@@ -182,7 +182,6 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
 
       setMaterials(materialOptions);
     } catch (error) {
-      console.error("Error fetching materials");
       toast.error("Error fetching materials");
     }
   }

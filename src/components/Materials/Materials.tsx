@@ -76,7 +76,7 @@ export default function Customers() {
       setMaterialsData(sortedMaterials);
       setFilteredMaterialsData(sortedMaterials);
     } catch (error) {
-      console.error("Error fetching Materials", error);
+     
       toast.error("Greška pri dobavljanju materijala iz baze");
     } finally {
       setIsLoading(false);
@@ -108,7 +108,7 @@ export default function Customers() {
       toast.success("Materijal uspešno dodat");
       closeAddMaterialModal();
     } catch (error) {
-      console.error("Error adding material:", error);
+     
       toast.error("Greška pri dodavanju materijala");
     }
   }
@@ -129,7 +129,7 @@ export default function Customers() {
       toast.success("Materijal uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
-      console.error("Error deleting material:", error);
+      
       toast.error("Greška pri brisanju materijala");
     }
   }
@@ -158,7 +158,7 @@ export default function Customers() {
       toast.success("Materijal uspešno izmenjen");
       closeEditMaterialModal();
     } catch (error) {
-      console.error("Error editing material:", error);
+     
       toast.error("Greška pri izmeni materijala");
     }
   }

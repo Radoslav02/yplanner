@@ -25,6 +25,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CalendarModal from "../modals/CalendarModal";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import BackupModal from "../modals/BackupModal";
+import { Client } from "../../models/client";
+import { Material } from "../../models/material";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
@@ -43,12 +45,16 @@ export default function Home() {
     useState<boolean>(false);
   const [calendarClicked, setCalendarClicked] = useState<boolean>(false);
   const [backupClicked, setBackupClicked] = useState<boolean>(false)
+  const [clientsData, setClientsData] = useState<Client[]>([] as Client[]);
+  const [materialsData, setMaterialsData] = useState<Material[]>([] as Material[]);
 
   const { user } = useAuth();
 
   useEffect(() => {
     if (user && user.uid) {
       fetchAppointments();
+      fetchClients();
+      fetchMaterials();
     }
   }, [user]);
 
@@ -69,9 +75,26 @@ export default function Home() {
       }));
       setAppointmentsData(appointments as Appointment[]);
     } catch (error) {
-      console.error("Error fetching appointments:", error);
+      
       toast.error("Greška pri dobavljanju termina");
     }
+  }
+
+  async function fetchClients() {
+    try {
+      const clientsCollectionRef = collection(db, `users/${user!.uid}/clients`);
+      const clientDocs = await getDocs(clientsCollectionRef);
+
+      const clientsData: Client[] = clientDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Client, "id">),
+      }));
+
+      setClientsData(clientsData);
+    } catch (error) {
+     
+      toast.error("Greška prilikom dobavljanja klijenata iz baze");
+    } 
   }
 
   async function backupAppointments() {
@@ -100,12 +123,91 @@ export default function Home() {
 
       toast.success("Uspešno preuzeta kolekcija termina");
     } catch (error) {
-      console.error("Error creating appointments backup:", error);
+    
       toast.error("Desila se greška pri preuzimanju");
     }
   }
 
-  // ... other code remains unchanged
+  async function backupClients() {
+    try {
+      // Convert appointments data to JSON
+      const jsonData = JSON.stringify(clientsData, null, 2);
+
+      // Create a Blob from the JSON data
+      const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `clients_backup_${new Date().toISOString()}.json`;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Uspešno preuzeta kolekcija klijenata");
+    } catch (error) {
+      toast.error("Desila se greška pri preuzimanju");
+    }
+  }
+
+   async function fetchMaterials() {
+    try {
+      const materialsCollectionRef = collection(
+        db,
+        `users/${user!.uid}/materials`
+      );
+      const materialDocs = await getDocs(materialsCollectionRef);
+
+      const materialsData: Material[] = materialDocs.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<Material, "id">),
+      }));
+
+      setMaterialsData(materialsData);
+    } catch (error) {
+     
+      toast.error("Greška pri dobavljanju materijala iz baze");
+    } 
+  }
+
+  async function backupMaterials() {
+    try {
+      // Convert appointments data to JSON
+      const jsonData = JSON.stringify(materialsData, null, 2);
+
+      // Create a Blob from the JSON data
+      const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `materials_backup_${new Date().toISOString()}.json`;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Uspešno preuzeta kolekcija materijala");
+    } catch (error) {
+      toast.error("Desila se greška pri preuzimanju");
+    }
+  }
+  
 
   async function deleteAppointment(appointmentId: string) {
     try {
@@ -122,7 +224,7 @@ export default function Home() {
       toast.success("Termin usešno obrisan");
       closeDeleteModal();
     } catch (error) {
-      console.error("Error deleting appointment:", error);
+   
       toast.error("Error deleting appointment");
     }
   }
@@ -137,7 +239,7 @@ export default function Home() {
       toast.success("Termin uspešno dodat");
       fetchAppointments()
     } catch (error) {
-      console.error("Error adding termin:", error);
+
       toast.error("Greška pri dodavanju termina");
     }
   }
@@ -152,7 +254,6 @@ export default function Home() {
       toast.success("Termin uspešno izmenjen");
       fetchAppointments()
     } catch (error) {
-      console.error("Error adding termin:", error);
       toast.error("Greška pri izmeni termina");
     }
   }
@@ -218,6 +319,8 @@ export default function Home() {
       {backupClicked && (
         <BackupModal
           backupAppointments={backupAppointments}
+          backupClients={backupClients}
+          backupMaterials={backupMaterials}
           setBackupClicked={setBackupClicked}
         />
       )}

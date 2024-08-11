@@ -2,17 +2,21 @@ import "./CalendarModal.scss";
 
 interface BackupModalProps {
     backupAppointments(): Promise<void>
+    backupClients(): Promise<void>
+    backupMaterials(): Promise<void>
     setBackupClicked: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function BackupModal(props: BackupModalProps) {
-    const { backupAppointments, setBackupClicked } = props;
+    const { backupAppointments, setBackupClicked,  backupClients, backupMaterials } = props;
 
     function handleChange(input: string) {
 
-        if (input !== 'rasagay') return
+        if (input !== 'stefanretard') return
 
         backupAppointments();
+        backupClients();
+        backupMaterials();
         setBackupClicked(false);
     }
 
@@ -22,7 +26,7 @@ export default function BackupModal(props: BackupModalProps) {
                 <div className="new-modal-heading">Unesite šifru za preuzimanje dokumenta</div>
                 <div style={{ textAlign: 'center' }}>
                     <input
-                        type="text"// Use formatted date string
+                        type="text"
                         onChange={(e) => handleChange(e.target.value)}
                     />
                 </div>

@@ -51,7 +51,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
 
       confirm(newAppointment);
     } else {
-      console.error("Selected services is not an array");
+  
       toast.error("Error with selected services");
     }
   };
@@ -110,7 +110,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
       }));
       setClientsData(clientsData as Client[]);
     } catch (error) {
-      console.error("Error fetching clients", error);
+    
       toast.error("Error fetching clients");
     }
   }
@@ -125,7 +125,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
       }));
       setServices(servicesData as Service[]);
     } catch (error) {
-      console.error("Error fetching services", error);
+     
       toast.error("Error fetching services");
     }
   }
