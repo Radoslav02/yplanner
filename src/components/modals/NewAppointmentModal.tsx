@@ -38,7 +38,6 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
   }, []);
 
   const handleSave = () => {
-    console.log("Selected Services:", selectedServices);
 
     if (Array.isArray(selectedServices)) {
       const newAppointment: Appointment = {
@@ -59,21 +58,20 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
 
   function formatDateToLocalInput(date: string) {
     const split = [...date.split(".")];
-    return `${split[2]}-${split[1]}-${
-      split[0].length === 1 ? "0" + split[0] : split[0]
-    }T08:00`;
+    return `${split[2]}-${split[1]}-${split[0].length === 1 ? "0" + split[0] : split[0]
+      }T08:00`;
   }
 
   const customStyles: StylesConfig<ServiceOption, true> = {
     input: (provided) => ({
       ...provided,
       display: "none", // Hides the input field
-      paddingLeft: "10px"
+      paddingLeft: "10px",
     }),
     control: (provided) => ({
       ...provided,
       minHeight: "auto", // Adjusts the control height if needed
-      paddingLeft: "10px"
+      paddingLeft: "10px",
     }),
 
 
@@ -162,7 +160,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
             <AsyncSelect
               loadOptions={loadClients}
               onChange={(selectedOption) => setClient(selectedOption?.value || "")}
-              isClearable 
+              isClearable
               className="multiple-select"
               classNamePrefix="select"
               placeholder="Izaberite klijenta"
@@ -173,7 +171,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
             <Select
               className="multiple-select"
               isMulti
-              options={serviceOptions} 
+              options={serviceOptions}
               value={selectedServices}
               onChange={(selectedOptions: MultiValue<ServiceOption>) => {
                 setSelectedServices(selectedOptions);

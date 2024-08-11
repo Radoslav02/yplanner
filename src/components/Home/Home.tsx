@@ -23,6 +23,8 @@ import NewAppointmentModal from "../modals/NewAppointmentModal";
 import EditAppointmentModal from "../modals/EditAppointmentModal";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CalendarModal from "../modals/CalendarModal";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import BackupModal from "../modals/BackupModal";
 
 export default function Home() {
   const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
@@ -40,6 +42,7 @@ export default function Home() {
   const [editAppointmentClicked, setEditAppointmentClicked] =
     useState<boolean>(false);
   const [calendarClicked, setCalendarClicked] = useState<boolean>(false);
+  const [backupClicked, setBackupClicked] = useState<boolean>(false)
 
   const { user } = useAuth();
 
@@ -70,6 +73,39 @@ export default function Home() {
       toast.error("Greška pri dobavljanju termina");
     }
   }
+
+  async function backupAppointments() {
+    try {
+      // Convert appointments data to JSON
+      const jsonData = JSON.stringify(appointmentsData, null, 2);
+
+      // Create a Blob from the JSON data
+      const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `appointments_backup_${new Date().toISOString()}.json`;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Uspešno preuzeta kolekcija termina");
+    } catch (error) {
+      console.error("Error creating appointments backup:", error);
+      toast.error("Desila se greška pri preuzimanju");
+    }
+  }
+
+  // ... other code remains unchanged
 
   async function deleteAppointment(appointmentId: string) {
     try {
@@ -134,7 +170,6 @@ export default function Home() {
       date.setDate(monday.getDate() + i)
       week.push(truncateDateString(date));
     }
-    console.table(week);
     return week;
   }
 
@@ -180,6 +215,12 @@ export default function Home() {
 
   return (
     <div className="home-container">
+      {backupClicked && (
+        <BackupModal
+          backupAppointments={backupAppointments}
+          setBackupClicked={setBackupClicked}
+        />
+      )}
       {calendarClicked && (
         <CalendarModal
           setRelativeDay={setRelativeDay}
@@ -234,11 +275,17 @@ export default function Home() {
       >
         <CalendarMonthIcon className="calendar" />
       </button>
+      <button
+        className="backup-icon"
+        onClick={() => setBackupClicked(true)}
+      >
+        <CloudDownloadIcon className="calendar" />
+      </button>
       <div
         className="right-swipe"
         onClick={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}
       ></div>
       <NavBar />
-    </div>
+    </div >
   );
 }

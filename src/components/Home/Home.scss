@@ -23,7 +23,7 @@
   top: 20px;
   left: 10px;
   border-radius: 10px;
-  background-color: #C9C0ED;
+  background-color: #c9c0ed;
   width: 60px;
   height: 60px;
   display: flex;
@@ -32,11 +32,30 @@
   z-index: 2;
 
   .calendar {
-    color: #6A2E86 !important;
+    color: #6a2e86 !important;
     width: 50px;
     height: 50px;
   }
+}
 
+.backup-icon {
+  position: fixed;
+  top: 100px;
+  left: 10px;
+  border-radius: 10px;
+  background-color: #c9c0ed;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+
+  .calendar {
+    color: #6a2e86 !important;
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .calendar-icon:active {
