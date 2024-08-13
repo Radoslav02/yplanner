@@ -1,19 +1,19 @@
 import "./CalendarModal.scss";
 
-interface BackupModalProps {
-    backupAppointments(): Promise<void>
+interface BackupMaterialModal {
+    backupMaterials(): Promise<void>
   
     setBackupClicked: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function BackupModal(props: BackupModalProps) {
-    const { backupAppointments, setBackupClicked } = props;
+export default function BackupMaterialModal(props: BackupMaterialModal) {
+    const { backupMaterials, setBackupClicked } = props;
 
     function handleChange(input: string) {
 
         if (input !== 'stefanretard') return
 
-        backupAppointments();
+        backupMaterials();
         setBackupClicked(false);
     }
 

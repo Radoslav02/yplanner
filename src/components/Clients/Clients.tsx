@@ -22,6 +22,8 @@ import NewClientModal from "../modals/NewClientModal";
 import EditClientModal from "../modals/EditClientModal";
 import SearchIcon from "@mui/icons-material/Search";
 import { MoonLoader } from "react-spinners";
+import BackupClientModal from "../modals/BackupClientModal";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 export default function Customers() {
   const [clientsData, setClientsData] = useState<Client[]>([]);
@@ -39,6 +41,7 @@ export default function Customers() {
   const [clientInstagram, setClientInstagram] = useState<string>("");
   const [clientMail, setClientMail] = useState<string>("");
   const [clientNote, setClientNote] = useState<string>("");
+  const [backupClicked, setBackupClicked] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -68,7 +71,6 @@ export default function Customers() {
       setClientsData(sortedClients);
       setFilteredClientsData(sortedClients);
     } catch (error) {
-   
       toast.error("Greška prilikom dobavljanja klijenata iz baze");
     } finally {
       setIsLoading(false);
@@ -97,7 +99,6 @@ export default function Customers() {
       toast.success("Klijent uspešno dodat");
       closeAddClientModal();
     } catch (error) {
-     
       toast.error("Greška pri dodavanju klijenta");
     }
   }
@@ -115,7 +116,6 @@ export default function Customers() {
       toast.success("Klijent uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
-      
       toast.error("Greška pri brisanju klijenta");
     }
   }
@@ -136,8 +136,37 @@ export default function Customers() {
       toast.success("Klijent uspešno izmenjen");
       closeEditClientModal();
     } catch (error) {
-    
       toast.error("Greška pri izmeni klijenta");
+    }
+  }
+
+  async function backupClients() {
+    try {
+      // Convert appointments data to JSON
+      const jsonData = JSON.stringify(clientsData, null, 2);
+
+      // Create a Blob from the JSON data
+      const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `clients_backup_${new Date().toISOString()}.json`;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Uspešno preuzeta kolekcija klijenata");
+    } catch (error) {
+      toast.error("Desila se greška pri preuzimanju");
     }
   }
 
@@ -195,6 +224,13 @@ export default function Customers() {
           heading={"klijenta"}
           close={closeDeleteModal}
           confirm={confirmDelete}
+        />
+      )}
+
+      {backupClicked && (
+        <BackupClientModal
+          backupClients={backupClients}
+          setBackupClicked={setBackupClicked}
         />
       )}
 
@@ -303,6 +339,10 @@ export default function Customers() {
           </div>
         ))
       )}
+
+      <button className="backup-icon" onClick={() => setBackupClicked(true)}>
+        <CloudDownloadIcon className="calendar" />
+      </button>
       <NavBar />
     </div>
   );

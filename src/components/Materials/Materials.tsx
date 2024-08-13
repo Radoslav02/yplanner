@@ -23,6 +23,8 @@ import NewMaterialModal from "../modals/NewMaterialModal";
 import EditMaterialModal from "../modals/EditMaterialModal";
 import SearchIcon from "@mui/icons-material/Search";
 import { MoonLoader } from "react-spinners";
+import BackupMaterialModal from "../modals/BackupMaterialModal";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 export default function Customers() {
   const [materialsData, setMaterialsData] = useState<Material[]>([]);
@@ -42,6 +44,7 @@ export default function Customers() {
   const [materialPrice, setMaterialPrice] = useState<string>("");
   const [materialColor, setMaterialColor] = useState<string>("");
   const [materialType, setMaterialType] = useState<string>("");
+  const [backupClicked, setBackupClicked] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -134,6 +137,36 @@ export default function Customers() {
     }
   }
 
+  async function backupMaterials() {
+    try {
+      // Convert appointments data to JSON
+      const jsonData = JSON.stringify(materialsData, null, 2);
+
+      // Create a Blob from the JSON data
+      const blob = new Blob([jsonData], { type: "application/json" });
+
+      // Create a URL for the Blob
+      const url = URL.createObjectURL(blob);
+
+      // Create a link element
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `materials_backup_${new Date().toISOString()}.json`;
+
+      // Append the link to the document and trigger the download
+      document.body.appendChild(a);
+      a.click();
+
+      // Clean up by removing the link and revoking the object URL
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast.success("Uspešno preuzeta kolekcija materijala");
+    } catch (error) {
+      toast.error("Desila se greška pri preuzimanju");
+    }
+  }
+
   async function editMaterial(materialId: string, updatedMaterial: Material) {
     try {
       const materialDocRef = doc(
@@ -219,6 +252,13 @@ export default function Customers() {
           heading={"materijal"}
           close={closeDeleteModal}
           confirm={confirmDelete}
+        />
+      )}
+
+{backupClicked && (
+        <BackupMaterialModal
+          backupMaterials={backupMaterials}
+          setBackupClicked={setBackupClicked}
         />
       )}
 
@@ -327,6 +367,12 @@ export default function Customers() {
           </div>
         ))
       )}
+        <button
+        className="backup-icon"
+        onClick={() => setBackupClicked(true)}
+      >
+        <CloudDownloadIcon className="calendar" />
+      </button>
       <NavBar />
     </div>
   );
