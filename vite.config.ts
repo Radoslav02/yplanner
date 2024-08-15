@@ -10,7 +10,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg'], // include additional assets here
       manifest: {
         name: 'JPlanner',
-        short_name: 'JPN',
+        short_name: 'JPlanner',
         description: 'Aplikacija za Jovanu Gospodaricu Vremena da lakse vodi svoj posao',
         theme_color: '#C9C0ED',
         icons: [
