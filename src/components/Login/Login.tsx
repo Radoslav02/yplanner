@@ -67,6 +67,7 @@ export default function Login() {
           className="logo"
           src={logo}
           alt="JPlanner logo"
+          loading="lazy"
         ></img>
       </div>
 
