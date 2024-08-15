@@ -12,6 +12,11 @@
   display: flex;
   justify-content: center;
   margin-top: 50px;
+
+  .logo {
+    min-height: 340px;
+    animation: smoothAppear 1.5s ease forwards;
+  }
 }
 
 input {
@@ -80,4 +85,17 @@ button {
 
 .Toastify__close-button.Toastify__close-button--light{
   width: 50px !important;
+}
+
+
+@keyframes smoothAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
