@@ -12,6 +12,7 @@
   align-items: center;
   font-family: "Edu AU VIC WA NT Hand", cursive !important;
   letter-spacing: 1px;
+  font-size: 16px !important;
 
   .new-modal-content {
     width: 300px;
@@ -63,6 +64,7 @@
 
         textarea,
         input {
+          font-size: 16px !important;
           width: 200px;
           height: 35px;
           padding: 5px;

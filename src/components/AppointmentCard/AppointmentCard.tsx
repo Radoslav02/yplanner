@@ -60,7 +60,7 @@ export default function AppointmentCard(props: AppointmentCardProps) {
                                     setEditAppointmentClicked(true);
                                 }}
                             >
-                                <p>{appointment.hour}h</p>
+                                <p className="time">{appointment.hour}h</p>
                                 <p>{appointment.name}</p>
                                 <p>{appointment.service}</p>
                             </span>

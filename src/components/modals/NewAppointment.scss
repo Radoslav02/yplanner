@@ -37,6 +37,7 @@
       gap: 5px;
       color: #C9C0ED;
       padding-bottom: 20px;
+      font-size: 16px !important;
     }
 
     .modal-form {
@@ -59,10 +60,12 @@
         select,
         textarea,
         option {
+          font-size: 16px !important;
           height: 30px !important;
           width: 200px !important;
           border-radius: 5px !important;
           border: 2px solid #C9C0ED !important;
+          font-size: 16px !important;
           padding: 0;
           text-align: center;
           background-color: white;
@@ -152,7 +155,7 @@
 
     .react-select__option {
       padding: 10px;
-      font-size: 14px;
+      font-size: 16px I !important;
       color: #6A2E86;
     }
 

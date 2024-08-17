@@ -75,7 +75,7 @@ export default function Statistics() {
 
     const filtered = appointmentsData.filter(appointment => {
       const appointmentDate = new Date(appointment.date.split(".").reverse().join("-"));
-      return appointmentDate >= start && appointmentDate <= end && appointment.done === true;
+      return appointmentDate >= start && appointmentDate <= end && appointment.done === true && appointment.service !== "OBAVEZA";
     });
 
     let sumTotalIncome = 0;

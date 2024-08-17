@@ -81,7 +81,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
       date: cutTimeFromDate(date),
       name: selectedClient ? selectedClient.label : "",
       id: data.id,
-      service: selectedServices.map((option) => option.value).join(", "),
+      service: selectedServices.map((s) => s.label).join(","),
       note,
       material: selectedMaterials.map((option) => option.value).join(", "),
       price,

@@ -43,7 +43,7 @@ export default function NewAppointmentModal(props: NewAppointmentProps) {
       const newAppointment: Appointment = {
         date: cutTimeFromDate(date),
         name: client,
-        service: selectedServices.map((s) => s.value).join(","), // Extract values from selected options
+        service: selectedServices.map((s) => s.label).join(","), 
         note,
         done: false,
         hour: getHoursFromDate(date),
