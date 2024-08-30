@@ -4,8 +4,7 @@ import NavBar from "../NavBar/NavBar";
 import "./Home.scss";
 import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import { truncateDateString } from "../../helpers/truncateDateString";
-import { addOneWeek } from "../../helpers/addOneWeek";
-import { subtractOneWeek } from "../../helpers/subtractOneWeek";
+import { addOneMonth } from "../../helpers/addOneMonth";
 import {
   addDoc,
   collection,
@@ -23,11 +22,12 @@ import NewAppointmentModal from "../modals/NewAppointmentModal";
 import EditAppointmentModal from "../modals/EditAppointmentModal";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CalendarModal from "../modals/CalendarModal";
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import BackupModal from "../modals/BackupModal";
+import { subtractOneMonth } from "../../helpers/substactOneMonth";
 
 export default function Home() {
-  const [weekDays, setWeekDays] = useState<string[]>([] as string[]);
+  const [monthDays, setMonthDays] = useState<string[]>([] as string[]);
   const [relativeDay, setRelativeDay] = useState<Date>(new Date());
   const [appointmentsData, setAppointmentsData] = useState<Appointment[]>(
     [] as Appointment[]
@@ -42,8 +42,7 @@ export default function Home() {
   const [editAppointmentClicked, setEditAppointmentClicked] =
     useState<boolean>(false);
   const [calendarClicked, setCalendarClicked] = useState<boolean>(false);
-  const [backupClicked, setBackupClicked] = useState<boolean>(false)
-  
+  const [backupClicked, setBackupClicked] = useState<boolean>(false);
 
   const { user } = useAuth();
 
@@ -54,7 +53,7 @@ export default function Home() {
   }, [user]);
 
   useEffect(() => {
-    setWeekDays(calcWeekDays());
+    setMonthDays(calcMonthDays());
   }, [relativeDay]);
 
   async function fetchAppointments() {
@@ -70,40 +69,24 @@ export default function Home() {
       }));
       setAppointmentsData(appointments as Appointment[]);
     } catch (error) {
-      
       toast.error("Greška pri dobavljanju termina");
     }
   }
 
-
-
   async function backupAppointments() {
     try {
-      // Convert appointments data to JSON
       const jsonData = JSON.stringify(appointmentsData, null, 2);
-
-      // Create a Blob from the JSON data
       const blob = new Blob([jsonData], { type: "application/json" });
-
-      // Create a URL for the Blob
       const url = URL.createObjectURL(blob);
-
-      // Create a link element
       const a = document.createElement("a");
       a.href = url;
       a.download = `appointments_backup_${new Date().toISOString()}.json`;
-
-      // Append the link to the document and trigger the download
       document.body.appendChild(a);
       a.click();
-
-      // Clean up by removing the link and revoking the object URL
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-
       toast.success("Uspešno preuzeta kolekcija termina");
     } catch (error) {
-    
       toast.error("Desila se greška pri preuzimanju");
     }
   }
@@ -120,10 +103,9 @@ export default function Home() {
           (appointment: Appointment) => appointment.id !== appointmentId
         )
       );
-      toast.success("Termin usešno obrisan");
+      toast.success("Termin uspešno obrisan");
       closeDeleteModal();
     } catch (error) {
-   
       toast.error("Error deleting appointment");
     }
   }
@@ -136,9 +118,8 @@ export default function Home() {
       );
       await addDoc(appointmentCollectionRef, newAppointment);
       toast.success("Termin uspešno dodat");
-      fetchAppointments()
+      fetchAppointments();
     } catch (error) {
-
       toast.error("Greška pri dodavanju termina");
     }
   }
@@ -151,31 +132,35 @@ export default function Home() {
       );
       await updateDoc(appointmentDocRef, newClient as { [key: string]: any });
       toast.success("Termin uspešno izmenjen");
-      fetchAppointments()
+      fetchAppointments();
     } catch (error) {
       toast.error("Greška pri izmeni termina");
     }
   }
 
-  function calcWeekDays() {
+  function calcMonthDays() {
     const currentDate = new Date(relativeDay);
-    const dayOfWeek = currentDate.getDay();
-    const daysToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    const monday = new Date(currentDate);
-    monday.setDate(currentDate.getDate() - daysToMonday);
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
 
-    const week = [];
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(monday);
-      date.setDate(monday.getDate() + i)
-      week.push(truncateDateString(date));
+    // Get the first day of the month
+    const firstDayOfMonth = new Date(year, month, 1);
+    // Get the last day of the month
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+
+    const daysInMonth = [];
+    let date = firstDayOfMonth;
+    while (date <= lastDayOfMonth) {
+      daysInMonth.push(truncateDateString(new Date(date)));
+      date.setDate(date.getDate() + 1);
     }
-    return week;
+
+    return daysInMonth;
   }
 
-  function filterAppointmentsByDate(weekDate: string) {
-    let day = weekDate.slice(weekDate.indexOf("-") + 2);
-    day = day.length === 1 ? '0' + day : day
+  function filterAppointmentsByDate(monthDate: string) {
+    let day = monthDate.slice(monthDate.indexOf("-") + 2);
+    day = day.length === 1 ? "0" + day : day;
     if (!appointmentsData) return [];
     const data = appointmentsData;
     const matched = [] as Appointment[];
@@ -251,12 +236,12 @@ export default function Home() {
       <div
         className="left-swipe"
         onClick={() =>
-          setRelativeDay((oldDate: Date) => subtractOneWeek(oldDate))
+          setRelativeDay((oldDate: Date) => subtractOneMonth(oldDate))
         }
       ></div>
       <div className="appointments-wrapper">
-        {weekDays?.length &&
-          weekDays.map((day: string, index: number) => (
+        {monthDays?.length &&
+          monthDays.map((day: string, index: number) => (
             <AppointmentCard
               key={index}
               day={day}
@@ -275,17 +260,14 @@ export default function Home() {
       >
         <CalendarMonthIcon className="calendar" />
       </button>
-      <button
-        className="backup-icon"
-        onClick={() => setBackupClicked(true)}
-      >
+      <button className="backup-icon" onClick={() => setBackupClicked(true)}>
         <CloudDownloadIcon className="calendar" />
       </button>
       <div
         className="right-swipe"
-        onClick={() => setRelativeDay((oldDate: Date) => addOneWeek(oldDate))}
+        onClick={() => setRelativeDay((oldDate: Date) => addOneMonth(oldDate))}
       ></div>
       <NavBar />
-    </div >
+    </div>
   );
 }
