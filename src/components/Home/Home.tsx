@@ -56,6 +56,11 @@ export default function Home() {
     setMonthDays(calcMonthDays());
   }, [relativeDay]);
 
+  // New effect to set the focus to the current day
+  useEffect(() => {
+    setRelativeDay(new Date());
+  }, []);
+
   async function fetchAppointments() {
     try {
       const appointmentsCollectionRef = collection(
