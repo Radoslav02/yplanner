@@ -29,7 +29,7 @@ export default function CalendarModal(props: CalendarModalProps) {
                 <div>
                     <input
                         type="date"
-                        defaultValue={formatDate(new Date())} // Use formatted date string
+                        defaultValue={formatDate(new Date())} 
                         onChange={(e) => handleChange(e.target.value)}
                     />
                 </div>

@@ -46,7 +46,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
   useEffect(() => {
     // Set default selected services and materials if available
     if (data.service) {
-      const defaultServices = data.service.split(", ").map((service) => ({
+      const defaultServices = data.service.split(",").map((service) => ({
         label: service,
         value: service,
       }));
@@ -54,7 +54,7 @@ export default function EditAppointmentModal(props: NewAppointmentProps) {
     }
 
     if (data.material) {
-      const defaultMaterials = data.material.split(", ").map((material) => ({
+      const defaultMaterials = data.material.split(",").map((material) => ({
         label: material,
         value: material,
       }));
